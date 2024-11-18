@@ -38,52 +38,28 @@ const Sidebar = ({ collapsed }) => {
 
   return (
     <Drawer
+      className="sidebar__container"
       variant="permanent"
       sx={{
         width: collapsed ? 70 : 240,
-        flexShrink: 0,
         "& .MuiDrawer-paper": {
           width: collapsed ? 70 : 240,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          backgroundColor: "#3a4b7c",
-          color: "#fff",
         },
       }}
     >
       {!collapsed ? (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            height: "70px",
-            alignItems: "center",
-            padding: "0 20px",
-          }}
-        >
+        <Box className="sidebar__logo">
           <img src={images.logo} alt="logo" style={{ width: "100px" }} />
         </Box>
       ) : (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            height: "70px",
-            alignItems: "center",
-            padding: "0 20px",
-          }}
-        >
+        <Box className="sidebar__logo">
           <img src={images.logoSm} alt="logo" style={{ width: "22px" }} />
         </Box>
       )}
-      <Box sx={{ flexGrow: 1, overflowY: "auto" }}>
+      <Box className="sidebar-menu__container">
         <Typography
+          className="sidebar__title"
           sx={{
-            padding: "12px 20px",
-            color: "#838fb9",
-            fontSize: "11px",
-            fontWeight: "700",
             display: collapsed ? "none" : "block",
           }}
         >
@@ -95,30 +71,20 @@ const Sidebar = ({ collapsed }) => {
             {DashboardMenu.map((item, index) => (
               <div key={index}>
                 <ListItem
+                  className="sidebar__item"
                   button
                   onClick={() => (item.secondary ? handleClick(index) : null)}
                   component={item.secondary ? null : Link}
                   to={item.path || "#"}
-                  sx={{
-                    color: "#abb9e8",
-                    "&:hover": {
-                      color: "#fff",
-                      "& .MuiListItemIcon-root": { color: "#fff" },
-                      "& .MuiListItemText-root .MuiTypography-root": {
-                        color: "#fff",
-                      },
-                    },
-                  }}
                 >
                   <ListItemIcon sx={{ minWidth: "1.75rem", color: "#abb9e8" }}>
                     <i className={item.icon}></i>
                   </ListItemIcon>
                   <ListItemText
                     primary={item.title}
+                    className="MuiTypography-root "
                     sx={{
                       ".MuiTypography-root": {
-                        fontSize: "15px",
-                        color: "#abb9e8",
                         display: collapsed ? "none" : "block",
                       },
                     }}
@@ -137,20 +103,13 @@ const Sidebar = ({ collapsed }) => {
                     <List component="div" disablePadding>
                       {item.secondary.map((subItem, subIndex) => (
                         <ListItem
+                          className="sidebar__item"
                           button
                           key={subIndex}
                           component={Link}
                           to={subItem.path}
                           sx={{
                             pl: 2,
-                            color: "#abb9e8",
-                            "&:hover": {
-                              color: "#fff",
-                              "& .MuiListItemIcon-root": { color: "#fff" },
-                              "& .MuiListItemText-root .MuiTypography-root": {
-                                color: "#fff",
-                              },
-                            },
                           }}
                         >
                           <ListItemIcon
@@ -163,10 +122,9 @@ const Sidebar = ({ collapsed }) => {
                           </ListItemIcon>
                           <ListItemText
                             primary={subItem.title}
+                            className="MuiTypography-root "
                             sx={{
                               ".MuiTypography-root": {
-                                fontSize: "15px",
-                                color: "#abb9e8",
                                 display: collapsed ? "none" : "block",
                               },
                             }}
@@ -184,19 +142,12 @@ const Sidebar = ({ collapsed }) => {
             {firstHalf.map((item, index) => (
               <div key={index}>
                 <ListItem
+                  className="sidebar__item"
                   button
                   component={item.secondary ? null : Link}
                   to={item.path || "#"}
                   sx={{
                     paddingLeft: "5px",
-                    color: "#abb9e8",
-                    "&:hover": {
-                      color: "#fff",
-                      "& .MuiListItemIcon-root": { color: "#fff" },
-                      "& .MuiListItemText-root .MuiTypography-root": {
-                        color: "#fff",
-                      },
-                    },
                   }}
                 >
                   <CustomTooltip
@@ -204,21 +155,11 @@ const Sidebar = ({ collapsed }) => {
                       <List>
                         {firstHalf.map((item) => (
                           <div key={item.title}>
-                            {" "}
-                            {/* Giả sử title là duy nhất */}
                             <ListItem
+                              className="sidebar__item"
                               button
                               component={item.secondary ? "div" : Link}
                               to={item.path || "#"}
-                              sx={{
-                                color: "#abb9e8",
-                                "&:hover": {
-                                  color: "#fff",
-                                  "& .MuiListItemIcon-root": { color: "#fff" },
-                                  "& .MuiListItemText-root .MuiTypography-root":
-                                    { color: "#fff" },
-                                },
-                              }}
                             >
                               <ListItemText
                                 primary={item.title}
@@ -236,6 +177,7 @@ const Sidebar = ({ collapsed }) => {
                               <List component="div" disablePadding>
                                 {item.secondary.map((subItem) => (
                                   <ListItem
+                                    className="sidebar__item2"
                                     button
                                     key={subItem.title}
                                     component={Link}
