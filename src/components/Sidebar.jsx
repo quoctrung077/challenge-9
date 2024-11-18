@@ -36,17 +36,8 @@ const Sidebar = ({ collapsed }) => {
     },
   });
 
-  return (
-    <Drawer
-      className="sidebar__container"
-      variant="permanent"
-      sx={{
-        width: collapsed ? 70 : 240,
-        "& .MuiDrawer-paper": {
-          width: collapsed ? 70 : 240,
-        },
-      }}
-    >
+  const DrawerList = (
+    <>
       {!collapsed ? (
         <Box className="sidebar__logo">
           <img src={images.logo} alt="logo" style={{ width: "100px" }} />
@@ -288,6 +279,21 @@ const Sidebar = ({ collapsed }) => {
           </List>
         )}
       </Box>
+    </>
+  );
+
+  return (
+    <Drawer
+      className="sidebar__container"
+      variant="permanent"
+      sx={{
+        width: collapsed ? 70 : 240,
+        "& .MuiDrawer-paper": {
+          width: collapsed ? 70 : 240,
+        },
+      }}
+    >
+      {DrawerList}
     </Drawer>
   );
 };

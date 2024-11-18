@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Sidebar from "../components/Sidebar";
@@ -9,9 +9,16 @@ const Layout = ({ children }) => {
   const [isMobile, setIsMobile] = useState(false);
   const [sidebarVisible, setSidebarVisible] = useState(false);
 
+  const sidebarRef = useRef(null);
+
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 600);
+      const isMobileView = window.innerWidth <= 600;
+      setIsMobile(isMobileView);
+      // ngăn chặn giữ trạng thái collapsed nếu chuyển sang mobile
+      if (isMobileView) {
+        setCollapsed(false);
+      }
     };
 
     handleResize();
@@ -22,6 +29,23 @@ const Layout = ({ children }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        isMobile &&
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target)
+      ) {
+        setSidebarVisible(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  });
   const toggleSidebar = () => {
     if (isMobile) {
       setSidebarVisible(!sidebarVisible);
@@ -33,6 +57,7 @@ const Layout = ({ children }) => {
   return (
     <div className="layout-container">
       <div
+        ref={sidebarRef}
         className={`layout-left ${isMobile && !sidebarVisible ? "hidden" : ""}`}
       >
         <Sidebar collapsed={collapsed} />
