@@ -1,7 +1,6 @@
-import { Typography } from "@mui/material";
-
+import ListMembers from "../components/ListMembers";
 const Member = () => {
-  return <Typography variant="h4">Member Page</Typography>;
+  return <ListMembers />;
 };
 
 export default Member;

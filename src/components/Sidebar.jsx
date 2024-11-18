@@ -200,9 +200,6 @@ const Sidebar = ({ collapsed }) => {
                   }}
                 >
                   <CustomTooltip
-                    sx={{
-                      backgroundColor: "#fff",
-                    }}
                     title={
                       <List>
                         {firstHalf.map((item) => (
