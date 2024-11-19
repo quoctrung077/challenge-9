@@ -1,0 +1,92 @@
+[
+  {
+    "name": "Nancy Martino",
+    "designation": "Team Leader & HR",
+    "favourite": true,
+    "projects": 225,
+    "tasks": 197,
+    "profileImage": "https://via.placeholder.com/100",
+    "backgroundImage": "https://via.placeholder.com/600x400"
+  },
+  {
+    "name": "Henry Baird",
+    "designation": "Full Stack Developer",
+    "favourite": true,
+    "projects": 352,
+    "tasks": 376,
+    "profileImage": "",
+    "backgroundImage": "https://via.placeholder.com/600x400"
+  },
+  {
+    "name": "Frank Hook",
+    "designation": "Project Manager",
+    "favourite": true,
+    "projects": 164,
+    "tasks": 182,
+    "profileImage": "https://via.placeholder.com/100",
+    "backgroundImage": "https://via.placeholder.com/600x400"
+  },
+  {
+    "name": "Jennifer Carter",
+    "designation": "UI/UX Designer",
+    "favourite": true,
+    "projects": 241,
+    "tasks": 204,
+    "profileImage": "https://via.placeholder.com/100",
+    "backgroundImage": "https://via.placeholder.com/600x400"
+  },
+  {
+    "name": "Jennifer Carter",
+    "designation": "UI/UX Designer",
+    "favourite": true,
+    "projects": 241,
+    "tasks": 204,
+    "profileImage": "https://via.placeholder.com/100",
+    "backgroundImage": "https://via.placeholder.com/600x400"
+  },
+  {
+    "name": "Jennifer Carter",
+    "designation": "UI/UX Designer",
+    "favourite": true,
+    "projects": 241,
+    "tasks": 204,
+    "profileImage": "https://via.placeholder.com/100",
+    "backgroundImage": "https://via.placeholder.com/600x400"
+  },
+  {
+    "name": "Jennifer Carter",
+    "designation": "UI/UX Designer",
+    "favourite": true,
+    "projects": 241,
+    "tasks": 204,
+    "profileImage": "https://via.placeholder.com/100",
+    "backgroundImage": "https://via.placeholder.com/600x400"
+  },
+  {
+    "name": "Jennifer Carter",
+    "designation": "UI/UX Designer",
+    "favourite": true,
+    "projects": 241,
+    "tasks": 204,
+    "profileImage": "https://via.placeholder.com/100",
+    "backgroundImage": "https://via.placeholder.com/600x400"
+  },
+  {
+    "name": "Trung",
+    "designation": "UI/UX Designer",
+    "favourite": true,
+    "projects": 241,
+    "tasks": 204,
+    "profileImage": "https://via.placeholder.com/100",
+    "backgroundImage": "https://via.placeholder.com/600x400"
+  },
+  {
+    "name": "Vo Thao",
+    "designation": "UI/UX Designer",
+    "favourite": true,
+    "projects": 241,
+    "tasks": 204,
+    "profileImage": "https://via.placeholder.com/100",
+    "backgroundImage": "https://via.placeholder.com/600x400"
+  }
+]

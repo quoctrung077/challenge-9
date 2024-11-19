@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import Sidebar from "../components/Sidebar";
+import Header from "../components/header";
+import Footer from "../components/footer";
+import Sidebar from "../components/sidebar";
 import PropTypes from "prop-types";
 
 const Layout = ({ children }) => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 
   const sidebarRef = useRef(null);
 
@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
       setIsMobile(isMobileView);
       // ngăn chặn giữ trạng thái collapsed nếu chuyển sang mobile
       if (isMobileView) {
-        setCollapsed(false);
+        setIsSidebarCollapsed(false);
       }
     };
 
@@ -37,7 +37,7 @@ const Layout = ({ children }) => {
         sidebarRef.current &&
         !sidebarRef.current.contains(event.target)
       ) {
-        setSidebarVisible(false);
+        setIsSidebarVisible(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -46,11 +46,11 @@ const Layout = ({ children }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   });
-  const toggleSidebar = () => {
+  const handleSidebarToggle = () => {
     if (isMobile) {
-      setSidebarVisible(!sidebarVisible);
+      setIsSidebarVisible((prevState) => !prevState);
     } else {
-      setCollapsed(!collapsed);
+      setIsSidebarCollapsed((prevState) => !prevState);
     }
   };
 
@@ -58,12 +58,14 @@ const Layout = ({ children }) => {
     <div className="layout-container">
       <div
         ref={sidebarRef}
-        className={`layout-left ${isMobile && !sidebarVisible ? "hidden" : ""}`}
+        className={`layout-left ${
+          isMobile && !isSidebarVisible ? "hidden" : ""
+        }`}
       >
-        <Sidebar collapsed={collapsed} />
+        <Sidebar isSidebarCollapsed={isSidebarCollapsed} />
       </div>
       <div className="layout-right">
-        <Header onToggleSidebar={toggleSidebar} />
+        <Header handleToggleSidebar={handleSidebarToggle} />
         {children}
         <Footer />
       </div>

@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useSelector } from "react-redux";
+import { ITEMS_PER_PAGE } from "../config/config.js";
 import {
   Breadcrumbs,
   Link,
@@ -17,28 +18,30 @@ import {
 } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import useDebounce from "../hooks/useDebounce";
 
 const Team = () => {
   const teamData = useSelector((state) => state.team.teamData);
-
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const itemsPerPage = 8;
+
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
   // Tính dữ liệu cho trang hiện tại
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
+  const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
 
-  // Tìm kiếm dữ liệu theo searchQuery
-  const filteredData = teamData.filter((member) => {
-    const lowerCaseQuery = searchQuery.toLowerCase();
-    return (
-      member.name.toLowerCase().includes(lowerCaseQuery) ||
-      member.designation.toLowerCase().includes(lowerCaseQuery)
-    );
-  });
+  const filteredData = useMemo(() => {
+    return teamData.filter((member) => {
+      const lowerCaseQuery = debouncedSearchQuery.toLowerCase();
+      return (
+        member.name.toLowerCase().includes(lowerCaseQuery) ||
+        member.designation.toLowerCase().includes(lowerCaseQuery)
+      );
+    });
+  }, [teamData, debouncedSearchQuery]); // re render lại khii teamdata or từ khoá debouncedSearchQuery thay đổi
 
-  // hiện thị dữ liệu cho trang hiện tại
+  // Hiển thị dữ liệu cho trang hiện tại
   const currentData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
 
   const handleChangePage = (event, value) => {
@@ -192,7 +195,7 @@ const Team = () => {
         {/* Pagination */}
         <Box mt={4} display="flex" justifyContent="center">
           <Pagination
-            count={Math.ceil(filteredData.length / itemsPerPage)}
+            count={Math.ceil(filteredData.length / ITEMS_PER_PAGE)}
             page={currentPage}
             onChange={handleChangePage}
             color="primary"

@@ -3,7 +3,7 @@ import "remixicon/fonts/remixicon.css";
 import { useState, useEffect } from "react";
 
 // eslint-disable-next-line react/prop-types
-const Header = ({ onToggleSidebar }) => {
+const Header = ({ handleToggleSidebar }) => {
   const [isMobile, setIsMobile] = useState(false);
   const checkScreenSize = () => {
     setIsMobile(window.innerWidth < 600);
@@ -31,11 +31,11 @@ const Header = ({ onToggleSidebar }) => {
     >
       <Toolbar id="toolbar123" style={{ paddingLeft: "0", height: "100%" }}>
         {isMobile ? (
-          <IconButton onClick={onToggleSidebar}>
+          <IconButton onClick={handleToggleSidebar}>
             <i className="ri-arrow-right-line"></i>
           </IconButton>
         ) : (
-          <IconButton onClick={onToggleSidebar}>
+          <IconButton onClick={handleToggleSidebar}>
             <i className="ri-menu-line"></i>
           </IconButton>
         )}
