@@ -7,18 +7,13 @@ import {
   Typography,
   Box,
   Grid,
-  Card,
-  CardContent,
-  CardMedia,
-  Avatar,
-  Button,
-  IconButton,
   InputBase,
   Pagination,
 } from "@mui/material";
-import StarIcon from "@mui/icons-material/Star";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+
 import useDebounce from "../hooks/useDebounce";
+
+import MemberCard from "./cardMember.jsx";
 
 const Team = () => {
   const teamData = useSelector((state) => state.team.teamData);
@@ -27,7 +22,7 @@ const Team = () => {
 
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
-  // Tính dữ liệu cho trang hiện tại
+  // Calculate data for the current page
   const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
   const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
 
@@ -39,9 +34,9 @@ const Team = () => {
         member.designation.toLowerCase().includes(lowerCaseQuery)
       );
     });
-  }, [teamData, debouncedSearchQuery]); // re render lại khii teamdata or từ khoá debouncedSearchQuery thay đổi
+  }, [teamData, debouncedSearchQuery]);
 
-  // Hiển thị dữ liệu cho trang hiện tại
+  // Display data for the current page
   const currentData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
 
   const handleChangePage = (event, value) => {
@@ -96,99 +91,7 @@ const Team = () => {
         {/* Team Cards */}
         <Grid container spacing={3}>
           {currentData.map((member, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
-              <Card
-                sx={{
-                  borderRadius: 2,
-                  overflow: "hidden",
-                  position: "relative",
-                  boxShadow: 3,
-                }}
-              >
-                {/* Card Background */}
-                <CardMedia
-                  component="div"
-                  sx={{
-                    height: 150,
-                    backgroundImage: `url(${member.backgroundImage})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    position: "relative",
-                  }}
-                >
-                  <IconButton
-                    sx={{
-                      position: "absolute",
-                      top: 8,
-                      left: 8,
-                      backgroundColor: "white",
-                      width: 30,
-                      height: 30,
-                    }}
-                  >
-                    <StarIcon color="warning" />
-                  </IconButton>
-                  <IconButton
-                    sx={{
-                      position: "absolute",
-                      top: 8,
-                      right: 8,
-                      backgroundColor: "white",
-                      width: 30,
-                      height: 30,
-                    }}
-                  >
-                    <MoreVertIcon />
-                  </IconButton>
-                  <Avatar
-                    sx={{
-                      width: 60,
-                      height: 60,
-                      position: "absolute",
-                      bottom: -30,
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                      border: "2px solid white",
-                    }}
-                    src={member.profileImage}
-                  >
-                    {!member.profileImage &&
-                      member.name
-                        .split(" ")
-                        .map((word) => word[0])
-                        .join("")}
-                  </Avatar>
-                </CardMedia>
-
-                {/* Card Content */}
-                <CardContent sx={{ textAlign: "center", pt: 5 }}>
-                  <Typography variant="h6">{member.name}</Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {member.designation}
-                  </Typography>
-                  <Box
-                    display="flex"
-                    justifyContent="space-between"
-                    mt={2}
-                    mb={2}
-                  >
-                    <Typography variant="body2">
-                      {member.projects} Projects
-                    </Typography>
-                    <Typography variant="body2">
-                      {member.tasks} Tasks
-                    </Typography>
-                  </Box>
-                  <Button
-                    variant="outlined"
-                    size="small"
-                    sx={{ textTransform: "none" }}
-                  >
-                    View Profile
-                  </Button>
-                </CardContent>
-              </Card>
-            </Grid>
+            <MemberCard key={index} member={member} />
           ))}
         </Grid>
 
@@ -205,5 +108,4 @@ const Team = () => {
     </Box>
   );
 };
-
 export default Team;

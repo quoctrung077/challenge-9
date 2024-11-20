@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import {
   Drawer,
@@ -14,7 +14,6 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import { DashboardMenu } from "../_mock/routers";
-import images from "../assets/images";
 
 // eslint-disable-next-line react/prop-types
 const Sidebar = ({ isSidebarCollapsed }) => {
@@ -24,28 +23,36 @@ const Sidebar = ({ isSidebarCollapsed }) => {
     setOpen((prevOpen) => ({ ...prevOpen, [menu]: !prevOpen[menu] }));
   };
 
+  const firstHalf = useMemo(() => DashboardMenu.slice(0, 1), []);
+  const secondHalf = useMemo(() => DashboardMenu.slice(1, 2), []);
+
+  const CustomTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))({
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: "#3a4b7c",
+      marginLeft: 0,
+    },
+  });
+
   const DrawerList = useMemo(() => {
-    const firstHalf = DashboardMenu.slice(0, 1);
-    const secondHalf = DashboardMenu.slice(1, 2);
-
-    const CustomTooltip = styled(({ className, ...props }) => (
-      <Tooltip {...props} classes={{ popper: className }} />
-    ))({
-      [`& .${tooltipClasses.tooltip}`]: {
-        backgroundColor: "#3a4b7c",
-        marginLeft: 0,
-      },
-    });
-
     return (
       <>
         {!isSidebarCollapsed ? (
           <Box className="sidebar__logo">
-            <img src={images.logo} alt="logo" style={{ width: "100px" }} />
+            <img
+              src={"./src/assets/images/logo-light.png"}
+              alt="logo"
+              style={{ width: "100px" }}
+            />
           </Box>
         ) : (
           <Box className="sidebar__logo">
-            <img src={images.logoSm} alt="logo" style={{ width: "22px" }} />
+            <img
+              src={"./src/assets/images/logo-sm.png"}
+              alt="logo"
+              style={{ width: "22px" }}
+            />
           </Box>
         )}
         <Box className="sidebar-menu__container">
@@ -76,7 +83,7 @@ const Sidebar = ({ isSidebarCollapsed }) => {
                     </ListItemIcon>
                     <ListItemText
                       primary={item.title}
-                      className="MuiTypography-root "
+                      className="MuiTypography-root"
                       sx={{
                         ".MuiTypography-root": {
                           display: isSidebarCollapsed ? "none" : "block",
@@ -116,7 +123,7 @@ const Sidebar = ({ isSidebarCollapsed }) => {
                             </ListItemIcon>
                             <ListItemText
                               primary={subItem.title}
-                              className="MuiTypography-root "
+                              className="MuiTypography-root"
                               sx={{
                                 ".MuiTypography-root": {
                                   display: isSidebarCollapsed
@@ -285,7 +292,7 @@ const Sidebar = ({ isSidebarCollapsed }) => {
         </Box>
       </>
     );
-  }, [isSidebarCollapsed, open]); // Recalculate only when 'isSidebarCollapsed' or 'open' changes
+  }, [isSidebarCollapsed, open, firstHalf, secondHalf]);
 
   return (
     <Drawer
@@ -303,4 +310,4 @@ const Sidebar = ({ isSidebarCollapsed }) => {
   );
 };
 
-export default Sidebar;
+export default React.memo(Sidebar);

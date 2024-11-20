@@ -1,10 +1,11 @@
 import { AppBar, Toolbar, IconButton, InputBase, Box } from "@mui/material";
 import "remixicon/fonts/remixicon.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 
 // eslint-disable-next-line react/prop-types
 const Header = ({ handleToggleSidebar }) => {
   const [isMobile, setIsMobile] = useState(false);
+
   const checkScreenSize = () => {
     setIsMobile(window.innerWidth < 600);
   };
@@ -60,4 +61,4 @@ const Header = ({ handleToggleSidebar }) => {
   );
 };
 
-export default Header;
+export default memo(Header);
