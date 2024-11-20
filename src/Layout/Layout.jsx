@@ -1,17 +1,24 @@
-import { useState, useEffect } from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import Sidebar from "../components/Sidebar";
+import { useState, useEffect, useRef } from "react";
+import Header from "../components/header";
+import Footer from "../components/footer";
+import Sidebar from "../components/sidebar";
 import PropTypes from "prop-types";
 
 const Layout = ({ children }) => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+
+  const sidebarRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 600);
+      const isMobileView = window.innerWidth <= 600;
+      setIsMobile(isMobileView);
+      // ngăn chặn giữ trạng thái collapsed nếu chuyển sang mobile
+      if (isMobileView) {
+        setIsSidebarCollapsed(false);
+      }
     };
 
     handleResize();
@@ -22,23 +29,43 @@ const Layout = ({ children }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  const toggleSidebar = () => {
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        isMobile &&
+        sidebarRef.current &&
+        !sidebarRef.current.contains(event.target)
+      ) {
+        setIsSidebarVisible(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  });
+  const handleSidebarToggle = () => {
     if (isMobile) {
-      setSidebarVisible(!sidebarVisible);
+      setIsSidebarVisible((prevState) => !prevState);
     } else {
-      setCollapsed(!collapsed);
+      setIsSidebarCollapsed((prevState) => !prevState);
     }
   };
 
   return (
     <div className="layout-container">
       <div
-        className={`layout-left ${isMobile && !sidebarVisible ? "hidden" : ""}`}
+        ref={sidebarRef}
+        className={`layout-left ${
+          isMobile && !isSidebarVisible ? "hidden" : ""
+        }`}
       >
-        <Sidebar collapsed={collapsed} />
+        <Sidebar isSidebarCollapsed={isSidebarCollapsed} />
       </div>
       <div className="layout-right">
-        <Header onToggleSidebar={toggleSidebar} />
+        <Header handleToggleSidebar={handleSidebarToggle} />
         {children}
         <Footer />
       </div>

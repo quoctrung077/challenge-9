@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Dashboard from "./pages/Dashboard";
-import Project from "./pages/Project";
-import CreateProjectPage from "./pages/CreateProject";
-import Member from "./pages/Members";
-import Layout from "./Layout/Layout";
+import Dashboard from "./pages/dashboard";
+import Project from "./pages/project";
+import CreateProjectPage from "./pages/createProject";
+import Member from "./pages/members";
+import Layout from "./layout/layout";
 
 const App = () => {
   return (

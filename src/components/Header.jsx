@@ -1,10 +1,11 @@
 import { AppBar, Toolbar, IconButton, InputBase, Box } from "@mui/material";
 import "remixicon/fonts/remixicon.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 
 // eslint-disable-next-line react/prop-types
-const Header = ({ onToggleSidebar }) => {
+const Header = ({ handleToggleSidebar }) => {
   const [isMobile, setIsMobile] = useState(false);
+
   const checkScreenSize = () => {
     setIsMobile(window.innerWidth < 600);
   };
@@ -29,13 +30,13 @@ const Header = ({ onToggleSidebar }) => {
         borderBottom: "1px solid #e9e9e9",
       }}
     >
-      <Toolbar sx={{ padding: "0 30px", height: "100%" }}>
+      <Toolbar id="toolbar123" style={{ paddingLeft: "0", height: "100%" }}>
         {isMobile ? (
-          <IconButton onClick={onToggleSidebar}>
+          <IconButton onClick={handleToggleSidebar}>
             <i className="ri-arrow-right-line"></i>
           </IconButton>
         ) : (
-          <IconButton onClick={onToggleSidebar}>
+          <IconButton onClick={handleToggleSidebar}>
             <i className="ri-menu-line"></i>
           </IconButton>
         )}
@@ -60,4 +61,4 @@ const Header = ({ onToggleSidebar }) => {
   );
 };
 
-export default Header;
+export default memo(Header);
