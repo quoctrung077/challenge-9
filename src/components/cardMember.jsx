@@ -1,4 +1,5 @@
-import { memo } from "react";
+import { useState, memo } from "react";
+import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import {
   Typography,
@@ -11,9 +12,41 @@ import {
   Button,
   IconButton,
   Divider,
+  Menu,
+  MenuItem,
 } from "@mui/material";
-
+import { removeMember } from "../Slice/TeamSlice";
+import DeleteMemberModal from "./deleteMemberModal.jsx";
 const MemberCard = ({ member }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const dispatch = useDispatch();
+  const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+  const [selectedMemberId, setSelectedMemberId] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClickOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleOpenModalDelete = (id) => {
+    setSelectedMemberId(id);
+    setIsModalDeleteOpen(true);
+  };
+
+  const handleCloseModalDelete = () => {
+    setIsModalDeleteOpen(false);
+    setSelectedMemberId(null);
+  };
+
+  const handleDeleteMember = () => {
+    dispatch(removeMember(selectedMemberId)); // Gọi action xóa thành viên theo id
+    handleCloseModalDelete();
+  };
+
   return (
     <Grid item xs={12} sm={6} md={3}>
       <Card
@@ -60,15 +93,47 @@ const MemberCard = ({ member }) => {
               height: 25,
               cursor: "pointer",
             }}
+            onClick={handleClickOpen}
           >
             <i className="ri-more-fill"></i>
           </IconButton>
+          <Menu
+            className="dropdown-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+          >
+            <MenuItem className="dropdown-item">
+              <i className="ri-pencil-line  "></i>
+              Edit
+            </MenuItem>
+            <MenuItem
+              className="dropdown-item"
+              onClick={() => handleOpenModalDelete(member._id)}
+            >
+              <i className="ri-delete-bin-5-line"></i>
+              Delete
+            </MenuItem>
+            <DeleteMemberModal
+              isOpenModalDelete={isModalDeleteOpen}
+              handleCloseModalDelete={handleCloseModalDelete}
+              handleDeleteMember={handleDeleteMember}
+            />
+          </Menu>
           <Avatar
             sx={{
-              width: 60,
-              height: 60,
+              width: 90,
+              height: 90,
               position: "absolute",
-              bottom: -30,
+              bottom: -40,
               left: "50%",
               transform: "translateX(-50%)",
               border: "2px solid white",
@@ -135,6 +200,7 @@ const MemberCard = ({ member }) => {
 };
 MemberCard.propTypes = {
   member: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     designation: PropTypes.string.isRequired,
     profileImage: PropTypes.string,

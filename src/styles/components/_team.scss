@@ -98,6 +98,43 @@
   }
 }
 
+.delete-member-modal__container {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  overflow: hidden;
+  background-color: #fff;
+  border-radius: 4px;
+  .delete-member-modal__header {
+    padding: 20px 20px 0 20px;
+    text-align: right;
+    .MuiButtonBase-root {
+      padding: 0;
+    }
+  }
+  .delete-member-modal__body {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .delete-member-modal__body-text {
+      margin: 24px 48px 0 48px;
+      text-align: center;
+      .delete-member-modal__body-text-title {
+        font-size: 0.8125rem * 1.5;
+        color: #495057;
+      }
+      .delete-member-modal__body-text-description {
+        margin-top: 10px;
+        color: #878a99;
+      }
+    }
+  }
+}
+
 .add-member-modal__container {
   position: relative;
   top: 50%;
@@ -126,6 +163,23 @@
       align-items: center;
       justify-content: center;
       border: 10px solid #f3f3f9;
+    }
+  }
+}
+
+.dropdown-menu {
+  .dropdown-item {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    padding: 5.6px 19.2px;
+    font-size: 0.8125rem;
+    width: 150px;
+    .ri-pencil-line {
+      font-size: 0.8125rem;
+    }
+    .ri-delete-bin-5-line {
+      font-size: 0.8125rem;
     }
   }
 }
