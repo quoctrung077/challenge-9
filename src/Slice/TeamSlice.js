@@ -16,9 +16,16 @@ const teamSlice = createSlice({
     reducers: {
         // add member 
         addMember: (state, action) => {
+            const { name, designation, favourite, projects, tasks, profileImage, backgroundImage } = action.payload;
             const newMember = {
-                _id: uuidv4(),  // create unique id
-                ...action.payload,
+                _id: uuidv4(),
+                name,
+                designation,
+                favourite: favourite || false,
+                projects: projects || 0,
+                tasks: tasks || 0,
+                profileImage: profileImage || "https://via.placeholder.com/100",
+                backgroundImage: backgroundImage || "https://via.placeholder.com/600x400",
             };
             state.teamData.push(newMember);
         },

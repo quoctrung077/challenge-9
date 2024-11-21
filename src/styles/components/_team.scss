@@ -15,6 +15,117 @@
       padding: 1rem;
       margin-bottom: 1.5rem;
       border-radius: 0.25rem;
+      display: flex;
+      justify-content: space-between;
+      height: 71px;
+      .search__input {
+        .MuiInputBase-input {
+          font-size: 0.8125rem;
+          padding: 0;
+        }
+      }
+      .add-member__container {
+        background-color: #0ab39c;
+        padding: 8px 14px;
+        border: 1px solid #0ab39c;
+        border-radius: 4px;
+        &:hover {
+          background-color: #099885;
+          border: 1px solid #0ab39c;
+        }
+        .add-member__button--text {
+          color: #fff;
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}
+
+.btn-add-member {
+  &.MuiButtonBase-root {
+    background-color: #0ab39c;
+    padding: 8px 14px;
+    border: 1px solid #0ab39c;
+    border-radius: 4px;
+    font-weight: normal;
+    &:hover {
+      background-color: #099885;
+      border: 1px solid #0ab39c;
+    }
+  }
+  &.MuiButton-text {
+    color: #fff;
+    font-size: 13px;
+    text-transform: capitalize;
+  }
+}
+
+.btn-close {
+  &.MuiButtonBase-root {
+    background-color: #f3f3f9;
+    border: #f3f3f9;
+    color: black;
+    text-transform: capitalize;
+    font-weight: normal;
+
+    &:hover {
+      background-color: #e9e9e9;
+      border: #e9e9e9;
+    }
+  }
+}
+
+.text-field {
+  .MuiInputBase-input {
+    font-size: 0.8125rem;
+    padding: 8px 14px;
+  }
+}
+
+.add-avatar-icon {
+  background: #eff2f7;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #e9ebec;
+  .ri-image-fill {
+    font-size: small;
+    color: #878a99;
+  }
+}
+
+.add-member-modal__container {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  overflow: hidden;
+  .add-member-modal__header {
+    background-image: url("https://via.placeholder.com/600x400");
+    background-size: cover;
+    background-position: center;
+    height: 150px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    .add-member-modal__avatar {
+      width: 90px;
+      height: 90px;
+      background-color: #f0f0f0;
+      border-radius: 50%;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 10px solid #f3f3f9;
     }
   }
 }

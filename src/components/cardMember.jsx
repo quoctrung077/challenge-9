@@ -10,19 +10,18 @@ import {
   Avatar,
   Button,
   IconButton,
+  Divider,
 } from "@mui/material";
-import StarIcon from "@mui/icons-material/Star";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 const MemberCard = ({ member }) => {
   return (
     <Grid item xs={12} sm={6} md={3}>
       <Card
         sx={{
-          borderRadius: 2,
+          borderRadius: 1,
           overflow: "hidden",
           position: "relative",
-          boxShadow: 3,
+          boxShadow: 2,
         }}
       >
         {/* Card Background */}
@@ -39,26 +38,30 @@ const MemberCard = ({ member }) => {
           <IconButton
             sx={{
               position: "absolute",
-              top: 8,
-              left: 8,
+              top: 24,
+              left: 24,
               backgroundColor: "white",
-              width: 30,
-              height: 30,
+              width: 25,
+              height: 25,
+              cursor: "pointer",
             }}
           >
-            <StarIcon color="warning" />
+            <i
+              className="ri-star-fill"
+              style={{ fontSize: 14, color: "#878a99" }}
+            ></i>
           </IconButton>
           <IconButton
             sx={{
               position: "absolute",
-              top: 8,
-              right: 8,
-              backgroundColor: "white",
-              width: 30,
-              height: 30,
+              top: 18,
+              right: 24,
+              width: 25,
+              height: 25,
+              cursor: "pointer",
             }}
           >
-            <MoreVertIcon />
+            <i className="ri-more-fill"></i>
           </IconButton>
           <Avatar
             sx={{
@@ -81,19 +84,47 @@ const MemberCard = ({ member }) => {
         </CardMedia>
 
         {/* Card Content */}
-        <CardContent sx={{ textAlign: "center", pt: 5 }}>
+        <CardContent sx={{ textAlign: "center", pt: 6, pr: 3, pl: 3 }}>
           <Typography variant="h6">{member.name}</Typography>
           <Typography variant="body2" color="text.secondary">
             {member.designation}
           </Typography>
-          <Box display="flex" justifyContent="space-between" mt={2} mb={2}>
-            <Typography variant="body2">{member.projects} Projects</Typography>
-            <Typography variant="body2">{member.tasks} Tasks</Typography>
+          <Box display="flex" justifyContent="space-around" mt={2} mb={2}>
+            <Box textAlign="center">
+              <Typography variant="body1" fontWeight="600">
+                {member.projects}
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                Projects
+              </Typography>
+            </Box>
+            <Divider
+              orientation="vertical"
+              flexItem
+              sx={{ borderColor: "#ddd", borderStyle: "dashed" }}
+            />
+            <Box textAlign="center">
+              <Typography variant="body1" fontWeight="600">
+                {member.tasks}
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                Tasks
+              </Typography>
+            </Box>
           </Box>
           <Button
             variant="outlined"
-            size="small"
-            sx={{ textTransform: "none" }}
+            sx={{
+              width: "100%",
+              textTransform: "none",
+              backgroundColor: "#f3f6f9",
+              borderColor: "#f3f6f9",
+              color: "black",
+              "&:hover": {
+                backgroundColor: "#e9ebec",
+                borderColor: "#e9ebec",
+              },
+            }}
           >
             View Profile
           </Button>
