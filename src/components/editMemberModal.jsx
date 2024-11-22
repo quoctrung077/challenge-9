@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Modal,
   Box,
@@ -9,24 +9,54 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { addMember } from "../Slice/TeamSlice";
+import { updateMember } from "../Slice/TeamSlice";
 
-// eslint-disable-next-line react/prop-types
-const AddMemberModal = ({ isOpen, handleClose }) => {
-  const [name, setName] = useState("");
-  const [designation, setDesignation] = useState("");
+const EditMemberModal = ({
+  // eslint-disable-next-line react/prop-types
+  isOpenEditModal,
+  // eslint-disable-next-line react/prop-types
+  handleCloseEditModal,
+  // eslint-disable-next-line react/prop-types
+  memberId,
+}) => {
   const dispatch = useDispatch();
 
-  const handleAddMember = () => {
-    if (name && designation) {
-      dispatch(addMember({ name, designation }));
-      handleClose();
-    } else {
-      alert("Please enter name and designation");
+  const teamData = useSelector((state) => state.team.teamData);
+
+  const [memberData, setMemberData] = useState({
+    name: "",
+    designation: "",
+  });
+
+  useEffect(() => {
+    if (memberId) {
+      const memberToEdit = teamData.find((member) => member._id === memberId);
+      if (memberToEdit) {
+        setMemberData({
+          name: memberToEdit.name,
+          designation: memberToEdit.designation,
+        });
+      }
     }
+  }, [memberId, teamData]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setMemberData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
+
+  const handleSubmitEdit = (e) => {
+    e.preventDefault();
+
+    dispatch(updateMember({ _id: memberId, updatedData: memberData }));
+    handleCloseEditModal();
+  };
+
   return (
-    <Modal open={isOpen} onClose={handleClose}>
+    <Modal open={isOpenEditModal || false} onClose={handleCloseEditModal}>
       <Box
         className="member-modal__container"
         sx={{ bgcolor: "background.paper", boxShadow: 24, borderRadius: 2 }}
@@ -37,7 +67,7 @@ const AddMemberModal = ({ isOpen, handleClose }) => {
             <Typography
               sx={{ fontWeight: 600, fontSize: "1rem", color: "#fff" }}
             >
-              Add New Members
+              Edit Member
             </Typography>
           </Box>
           <Box sx={{ position: "absolute", right: 10, top: 10 }}>
@@ -51,7 +81,7 @@ const AddMemberModal = ({ isOpen, handleClose }) => {
             >
               <i style={{ fontSize: "1rem" }} className="ri-image-fill"></i>
             </IconButton>
-            <IconButton onClick={handleClose}>
+            <IconButton onClick={handleCloseEditModal}>
               <CloseIcon />
             </IconButton>
           </Box>
@@ -79,9 +109,9 @@ const AddMemberModal = ({ isOpen, handleClose }) => {
             <TextField
               className="text-field"
               fullWidth
-              placeholder="Enter name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              name="name"
+              value={memberData.name}
+              onChange={handleInputChange}
             />
           </Box>
           <Box mb={3}>
@@ -91,17 +121,17 @@ const AddMemberModal = ({ isOpen, handleClose }) => {
             <TextField
               className="text-field"
               fullWidth
-              placeholder="Enter designation"
-              value={designation}
-              onChange={(e) => setDesignation(e.target.value)}
+              name="designation"
+              value={memberData.designation}
+              onChange={handleInputChange}
             />
           </Box>
           <Box display="flex" justifyContent="flex-end" gap={1}>
-            <Button className="btn-close" onClick={handleClose}>
+            <Button className="btn-close" onClick={handleCloseEditModal}>
               Close
             </Button>
-            <Button className="btn-add-member" onClick={handleAddMember}>
-              Add Member
+            <Button className="btn-add-member" onClick={handleSubmitEdit}>
+              Save
             </Button>
           </Box>
         </Box>
@@ -110,4 +140,4 @@ const AddMemberModal = ({ isOpen, handleClose }) => {
   );
 };
 
-export default AddMemberModal;
+export default EditMemberModal;

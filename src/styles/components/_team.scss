@@ -135,14 +135,14 @@
   }
 }
 
-.add-member-modal__container {
+.member-modal__container {
   position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 500px;
   overflow: hidden;
-  .add-member-modal__header {
+  .member-modal__header {
     background-image: url("https://via.placeholder.com/600x400");
     background-size: cover;
     background-position: center;
@@ -150,7 +150,7 @@
     position: relative;
     display: flex;
     justify-content: space-between;
-    .add-member-modal__avatar {
+    .member-modal__avatar {
       width: 90px;
       height: 90px;
       background-color: #f0f0f0;

@@ -17,10 +17,12 @@ import {
 } from "@mui/material";
 import { removeMember } from "../Slice/TeamSlice";
 import DeleteMemberModal from "./deleteMemberModal.jsx";
+import EditMemberModal from "./editMemberModal.jsx";
 const MemberCard = ({ member }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+  const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const [selectedMemberId, setSelectedMemberId] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -40,11 +42,24 @@ const MemberCard = ({ member }) => {
   const handleCloseModalDelete = () => {
     setIsModalDeleteOpen(false);
     setSelectedMemberId(null);
+    setAnchorEl(null);
   };
 
   const handleDeleteMember = () => {
     dispatch(removeMember(selectedMemberId)); // Gọi action xóa thành viên theo id
     handleCloseModalDelete();
+    setAnchorEl(null);
+  };
+
+  const handlOpenEditModal = (id) => {
+    setSelectedMemberId(id);
+    setIsModalEditOpen(true);
+  };
+
+  const handleCloseModalEdit = () => {
+    setIsModalDeleteOpen(false);
+    setIsModalEditOpen(null);
+    setAnchorEl(null);
   };
 
   return (
@@ -111,10 +126,18 @@ const MemberCard = ({ member }) => {
               horizontal: "right",
             }}
           >
-            <MenuItem className="dropdown-item">
+            <MenuItem
+              className="dropdown-item"
+              onClick={() => handlOpenEditModal(member._id)}
+            >
               <i className="ri-pencil-line  "></i>
               Edit
             </MenuItem>
+            <EditMemberModal
+              isOpenEditModal={isModalEditOpen}
+              handleCloseEditModal={handleCloseModalEdit}
+              memberId={selectedMemberId}
+            />
             <MenuItem
               className="dropdown-item"
               onClick={() => handleOpenModalDelete(member._id)}
