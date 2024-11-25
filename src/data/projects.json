@@ -1,0 +1,202 @@
+[
+  {
+    "projectTitle": "Website Redesign",
+    "thumbnailImage": "https://example.com/image1.jpg",
+    "projectDescription": "Redesign the corporate website with a modern layout.",
+    "priority": "High",
+    "status": "Inprogress",
+    "deadline": "2024-12-31",
+    "startDate": "2024-11-01",
+    "favourite": true,
+    "attachedFiles": ["design_specs.pdf", "wireframes.png"],
+    "privacy": { "status": "Private" },
+    "tags": {
+      "categories": "Design",
+      "skills": ["UI/UX", "Graphic Design"]
+    },
+    "members": {
+      "teamLead": "Alice Johnson",
+      "teamMembers": ["Bob Smith", "Charlie Davis"]
+    }
+  },
+  {
+    "projectTitle": "Mobile App Development",
+    "thumbnailImage": "https://example.com/image2.jpg",
+    "projectDescription": "Develop a cross-platform mobile app for e-commerce.",
+    "priority": "Medium",
+    "status": "Completed",
+    "deadline": "2025-03-15",
+    "startDate": "2024-12-01",
+    "favourite": false,
+    "attachedFiles": ["requirements.docx"],
+    "privacy": { "status": "Public" },
+    "tags": {
+      "categories": "Development",
+      "skills": ["React Native", "API Integration"]
+    },
+    "members": {
+      "teamLead": "Eve Green",
+      "teamMembers": ["Frank White", "Grace Lee"]
+    }
+  },
+  {
+    "projectTitle": "Marketing Campaign",
+    "thumbnailImage": "https://example.com/image3.jpg",
+    "projectDescription": "Launch a digital marketing campaign for the new product line.",
+    "priority": "Low",
+    "status": "Completed",
+    "deadline": "2024-10-15",
+    "startDate": "2024-08-01",
+    "favourite": true,
+    "attachedFiles": ["campaign_plan.pdf"],
+    "privacy": { "status": "Private" },
+    "tags": {
+      "categories": "Marketing",
+      "skills": ["SEO", "Content Marketing"]
+    },
+    "members": {
+      "teamLead": "Hank Adams",
+      "teamMembers": ["Ivy Collins", "Jack Brown"]
+    }
+  },
+  {
+    "projectTitle": "Cloud Migration",
+    "thumbnailImage": "https://example.com/image4.jpg",
+    "projectDescription": "Migrate existing infrastructure to cloud services.",
+    "priority": "High",
+    "status": "Inprogress",
+    "deadline": "2024-11-30",
+    "startDate": "2024-09-15",
+    "favourite": false,
+    "attachedFiles": ["migration_plan.docx"],
+    "privacy": { "status": "Private" },
+    "tags": {
+      "categories": "IT",
+      "skills": ["Cloud Computing", "AWS"]
+    },
+    "members": {
+      "teamLead": "Laura Scott",
+      "teamMembers": ["Mike Taylor", "Nancy Wilson"]
+    }
+  },
+  {
+    "projectTitle": "Product Launch Event",
+    "thumbnailImage": "https://example.com/image5.jpg",
+    "projectDescription": "Organize a launch event for the new product.",
+    "priority": "Medium",
+    "status": "Completed",
+    "deadline": "2024-12-20",
+    "startDate": "2024-10-15",
+    "favourite": false,
+    "attachedFiles": [],
+    "privacy": { "status": "Public" },
+    "tags": {
+      "categories": "Events",
+      "skills": ["Event Completed", "Public Relations"]
+    },
+    "members": {
+      "teamLead": "Olivia Perez",
+      "teamMembers": ["Paul Martinez", "Quinn Harris"]
+    }
+  },
+  {
+    "projectTitle": "Cybersecurity Audit",
+    "thumbnailImage": "https://example.com/image6.jpg",
+    "projectDescription": "Conduct a comprehensive security audit for the company.",
+    "priority": "High",
+    "status": "Inprogress",
+    "deadline": "2024-11-25",
+    "startDate": "2024-10-01",
+    "favourite": true,
+    "attachedFiles": ["audit_checklist.xlsx"],
+    "privacy": { "status": "Private" },
+    "tags": {
+      "categories": "Security",
+      "skills": ["Cybersecurity", "Risk Assessment"]
+    },
+    "members": {
+      "teamLead": "Ryan King",
+      "teamMembers": ["Sarah Lewis", "Tommy Clark"]
+    }
+  },
+  {
+    "projectTitle": "Data Analysis Project",
+    "thumbnailImage": "https://example.com/image7.jpg",
+    "projectDescription": "Analyze sales data to identify growth opportunities.",
+    "priority": "Medium",
+    "status": "Completed",
+    "deadline": "2024-10-30",
+    "startDate": "2024-09-01",
+    "favourite": false,
+    "attachedFiles": ["sales_data.csv"],
+    "privacy": { "status": "Private" },
+    "tags": {
+      "categories": "Data Science",
+      "skills": ["Data Analysis", "Python"]
+    },
+    "members": {
+      "teamLead": "Uma Patel",
+      "teamMembers": ["Victor Harris", "Wendy Allen"]
+    }
+  },
+  {
+    "projectTitle": "Employee Training Program",
+    "thumbnailImage": "https://example.com/image8.jpg",
+    "projectDescription": "Develop and deliver a training program for new employees.",
+    "priority": "Low",
+    "status": "Completed",
+    "deadline": "2025-01-15",
+    "startDate": "2024-12-01",
+    "favourite": false,
+    "attachedFiles": [],
+    "privacy": { "status": "Public" },
+    "tags": {
+      "categories": "HR",
+      "skills": ["Training", "Content Development"]
+    },
+    "members": {
+      "teamLead": "Xander Brooks",
+      "teamMembers": ["Yvonne Clark", "Zack Knight"]
+    }
+  },
+  {
+    "projectTitle": "Customer Feedback Analysis",
+    "thumbnailImage": "https://example.com/image9.jpg",
+    "projectDescription": "Gather and analyze customer feedback to improve services.",
+    "priority": "Medium",
+    "status": "Completed",
+    "deadline": "2025-02-28",
+    "startDate": "2024-11-10",
+    "favourite": true,
+    "attachedFiles": ["feedback_survey_results.xlsx"],
+    "privacy": { "status": "Private" },
+    "tags": {
+      "categories": "Customer Service",
+      "skills": ["Data Analysis", "Customer Relationship Management"]
+    },
+    "members": {
+      "teamLead": "Amy Grant",
+      "teamMembers": ["Ben Parker", "Cindy Lopez"]
+    }
+  },
+  {
+    "projectTitle": "Social Media Strategy",
+    "thumbnailImage": "https://example.com/image10.jpg",
+    "projectDescription": "Create a comprehensive social media strategy for 2025.",
+    "priority": "Low",
+    "status": "Inprogress",
+    "deadline": "2025-01-31",
+    "startDate": "2024-12-05",
+    "favourite": false,
+    "attachedFiles": [],
+    "privacy": { "status": "Public" },
+    "tags": {
+      "categories": "Social Media",
+      "skills": ["Social Media Marketing", "Analytics"]
+    },
+    "members": {
+      "teamLead": "David Carter",
+      "teamMembers": ["Emma Watson", "Fred Green"]
+    }
+  }
+]
