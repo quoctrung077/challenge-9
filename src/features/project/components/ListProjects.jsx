@@ -10,10 +10,10 @@ import {
   Pagination,
 } from "@mui/material";
 import { useSelector } from "react-redux";
-import ProjectCard from "./cardProject.jsx";
-import { selectProjects } from "../Slice/projectSlice.js";
-import { ITEMS_PER_PAGE_PROJECT } from "../config/config.js";
-import useDebounce from "../hooks/useDebounce.js";
+import ProjectCard from "./CardProject.jsx";
+import { selectProjects } from "../projectSlice.js";
+import { ITEMS_PER_PAGE_PROJECT } from "../../../config/config.js";
+import useDebounce from "../../../hooks/useDebounce.js";
 
 const ListProjects = () => {
   const projects = useSelector(selectProjects);

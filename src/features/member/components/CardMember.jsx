@@ -15,9 +15,9 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import { removeMember } from "../Slice/TeamSlice";
-import DeleteMemberModal from "./deleteMemberModal.jsx";
-import EditMemberModal from "./editMemberModal.jsx";
+import { removeMember } from "../memberSlice.js";
+import DeleteMemberModal from "./DeleteMemberModal.jsx";
+import EditMemberModal from "./EditMemberModal.jsx";
 const MemberCard = ({ member }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();

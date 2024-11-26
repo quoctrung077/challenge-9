@@ -9,7 +9,7 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { updateMember } from "../Slice/TeamSlice";
+import { updateMember } from "..memberSlice/";
 
 const EditMemberModal = ({
   // eslint-disable-next-line react/prop-types

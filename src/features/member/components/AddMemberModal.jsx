@@ -9,7 +9,7 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { addMember } from "../Slice/TeamSlice";
+import { addMember } from "../memberSlice";
 
 // eslint-disable-next-line react/prop-types
 const AddMemberModal = ({ isOpen, handleClose }) => {

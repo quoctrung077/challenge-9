@@ -13,7 +13,7 @@ import {
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
-import { DashboardMenu } from "../_mock/routers";
+import { DashboardMenu } from "../../_mock/mockDashboardMenu.jsx";
 
 // eslint-disable-next-line react/prop-types
 const Sidebar = ({ isSidebarCollapsed }) => {

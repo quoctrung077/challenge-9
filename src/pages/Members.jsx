@@ -1,4 +1,4 @@
-import ListMembers from "../components/listMembers.jsx";
+import ListMembers from "../features/member/components/ListMembers";
 const Member = () => {
   return <ListMembers />;
 };

@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useSelector } from "react-redux";
-import { ITEMS_PER_PAGE } from "../config/config.js";
+import { ITEMS_PER_PAGE } from "../../../config/config.js";
 import {
   Breadcrumbs,
   Link,
@@ -11,11 +11,9 @@ import {
   Pagination,
   Button,
 } from "@mui/material";
-
-import useDebounce from "../hooks/useDebounce.js";
-
-import MemberCard from "./cardMember.jsx";
-import AddMemberModal from "./addMemberModal.jsx";
+import useDebounce from "../../../hooks/useDebounce.js";
+import MemberCard from "./CardMember.js";
+import AddMemberModal from "./AddMemberModal.js";
 
 const Team = () => {
   const teamData = useSelector((state) => state.team.teamData);
