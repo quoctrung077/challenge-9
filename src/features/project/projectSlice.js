@@ -2,14 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 import ProjectData from "../../_mock/data/projects.json";
 
-const InitialState = {
+const initialState = {
     ProjectData: ProjectData?.map((project) => ({ ...project, _id: uuidv4() })) || [],
 };
 
 const ProjectSlice = createSlice({
 
     name: "project",
-    InitialState,
+    initialState,
     reducers: {
         //add project
         addProject: (state, action) => {

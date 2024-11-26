@@ -9,7 +9,7 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { updateMember } from "..memberSlice/";
+import { updateMember } from "../memberSlice";
 
 const EditMemberModal = ({
   // eslint-disable-next-line react/prop-types
@@ -21,7 +21,7 @@ const EditMemberModal = ({
 }) => {
   const dispatch = useDispatch();
 
-  const teamData = useSelector((state) => state.team.teamData);
+  const MemberData = useSelector((state) => state.team.MemberData);
 
   const [memberData, setMemberData] = useState({
     name: "",
@@ -30,7 +30,7 @@ const EditMemberModal = ({
 
   useEffect(() => {
     if (memberId) {
-      const memberToEdit = teamData.find((member) => member._id === memberId);
+      const memberToEdit = MemberData.find((member) => member._id === memberId);
       if (memberToEdit) {
         setMemberData({
           name: memberToEdit.name,
@@ -38,7 +38,7 @@ const EditMemberModal = ({
         });
       }
     }
-  }, [memberId, teamData]);
+  }, [memberId, MemberData]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
