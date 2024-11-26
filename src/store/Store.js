@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import teamReducer from "../Slice/TeamSlice";
+import MemberReducer from "../features/member/memberSlice";
+import ProjectReducer from "../features/project/projectSlice";
 
 const store = configureStore({
     reducer: {
-        team: teamReducer,
+        team: MemberReducer,
+        project: ProjectReducer,
     },
 });
 

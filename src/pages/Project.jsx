@@ -1,7 +1,11 @@
-import { Typography } from "@mui/material";
+import ListProjects from "../features/project/components/ListProjects";
 
 const Project = () => {
-  return <Typography variant="h4">Project Page</Typography>;
+  return (
+    <div>
+      <ListProjects />
+    </div>
+  );
 };
 
 export default Project;

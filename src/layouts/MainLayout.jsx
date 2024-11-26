@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import Header from "../components/header";
-import Footer from "../components/footer";
-import Sidebar from "../components/sidebar";
+import Header from "../components/layout/Header";
+import Footer from "../components/layout/Footer";
+import Sidebar from "../components/layout/Sidebar";
 import PropTypes from "prop-types";
 
 const Layout = ({ children }) => {

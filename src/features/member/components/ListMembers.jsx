@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useSelector } from "react-redux";
-import { ITEMS_PER_PAGE } from "../config/config.js";
+import { ITEMS_PER_PAGE } from "../../../config/config.js";
 import {
   Breadcrumbs,
   Link,
@@ -9,16 +9,25 @@ import {
   Grid,
   InputBase,
   Pagination,
+  Button,
 } from "@mui/material";
-
-import useDebounce from "../hooks/useDebounce";
-
-import MemberCard from "./cardMember.jsx";
+import useDebounce from "../../../hooks/useDebounce.js";
+import MemberCard from "./CardMember.jsx";
+import AddMemberModal from "./AddMemberModal.jsx";
 
 const Team = () => {
-  const teamData = useSelector((state) => state.team.teamData);
+  const MemberData = useSelector((state) => state.team.MemberData);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
@@ -27,14 +36,14 @@ const Team = () => {
   const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
 
   const filteredData = useMemo(() => {
-    return teamData.filter((member) => {
+    return MemberData.filter((member) => {
       const lowerCaseQuery = debouncedSearchQuery.toLowerCase();
       return (
         member.name.toLowerCase().includes(lowerCaseQuery) ||
         member.designation.toLowerCase().includes(lowerCaseQuery)
       );
     });
-  }, [teamData, debouncedSearchQuery]);
+  }, [MemberData, debouncedSearchQuery]);
 
   // Display data for the current page
   const currentData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
@@ -52,13 +61,21 @@ const Team = () => {
     <Box className="team__container">
       {/* Breadcrumbs */}
       <Box className="breadcrumb__container">
-        <Typography>Team</Typography>
+        <Typography
+          sx={{
+            fontWeight: "bold",
+            textTransform: "uppercase",
+            color: "#495057",
+          }}
+        >
+          Members
+        </Typography>
         <Breadcrumbs separator=">" aria-label="breadcrumb">
           <Link underline="hover" color="#212529" href="#">
             Pages
           </Link>
           <Typography underline="hover" color="inherit" href="#">
-            Team
+            Members
           </Typography>
         </Breadcrumbs>
       </Box>
@@ -76,14 +93,46 @@ const Team = () => {
               padding: "0.25rem",
             }}
           >
-            <Box sx={{ marginLeft: "8px", marginRight: "8px" }}>
-              <i style={{ color: "#495057" }} className="ri-search-line"></i>
+            <Box
+              sx={{ marginLeft: "8px", marginRight: "8px", display: "flex" }}
+            >
+              <i
+                style={{ color: "#878a99", fontSize: "0.8125rem" }}
+                className="ri-search-line"
+              ></i>
             </Box>
             <InputBase
-              width="250px"
+              className="search__input"
+              width="500px"
               value={searchQuery}
               onChange={handleSearchChange}
               placeholder="Search  . . ."
+            />
+          </Box>
+          <Box
+            className="add-member__container"
+            sx={{ display: "flex", alignItems: "center" }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <i
+                style={{
+                  color: "#fff",
+                  fontSize: "0.8125rem",
+                  marginRight: "0.25rem",
+                }}
+                className="ri-add-fill"
+              ></i>
+            </Box>
+            <Button
+              className="add-member__button--text"
+              sx={{ p: 0 }}
+              onClick={handleOpenModal}
+            >
+              Add Members
+            </Button>
+            <AddMemberModal
+              isOpen={isModalOpen}
+              handleClose={handleCloseModal}
             />
           </Box>
         </Box>
@@ -108,4 +157,5 @@ const Team = () => {
     </Box>
   );
 };
+
 export default Team;
