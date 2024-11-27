@@ -15,7 +15,7 @@ import useDebounce from "../../../hooks/useDebounce.js";
 import MemberCard from "./CardMember.jsx";
 import AddMemberModal from "./AddMemberModal.jsx";
 
-const Team = () => {
+const ListMembers = () => {
   const MemberData = useSelector((state) => state.team.MemberData);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -158,4 +158,4 @@ const Team = () => {
   );
 };
 
-export default Team;
+export default ListMembers;

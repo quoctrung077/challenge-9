@@ -6,7 +6,8 @@
     "projects": 225,
     "tasks": 197,
     "profileImage": "https://via.placeholder.com/100",
-    "backgroundImage": "https://via.placeholder.com/600x400"
+    "backgroundImage": "https://via.placeholder.com/600x400",
+    "selected": false
   },
   {
     "name": "Henry Baird",
@@ -15,6 +16,7 @@
     "projects": 352,
     "tasks": 376,
     "profileImage": "",
+    "selected": false,
     "backgroundImage": "https://via.placeholder.com/600x400"
   },
   {
@@ -23,6 +25,7 @@
     "favourite": true,
     "projects": 164,
     "tasks": 182,
+    "selected": false,
     "profileImage": "https://via.placeholder.com/100",
     "backgroundImage": "https://via.placeholder.com/600x400"
   },
@@ -31,6 +34,27 @@
     "designation": "UI/UX Designer",
     "favourite": true,
     "projects": 241,
+    "tasks": 204,
+    "selected": false,
+    "profileImage": "https://via.placeholder.com/100",
+    "backgroundImage": "https://via.placeholder.com/600x400"
+  },
+  {
+    "name": "Jennifer Carter",
+    "designation": "UI/UX Designer",
+    "favourite": true,
+    "projects": 241,
+    "selected": false,
+    "tasks": 204,
+    "profileImage": "https://via.placeholder.com/100",
+    "backgroundImage": "https://via.placeholder.com/600x400"
+  },
+  {
+    "name": "Jennifer Carter",
+    "designation": "UI/UX Designer",
+    "favourite": true,
+    "projects": 241,
+    "selected": false,
     "tasks": 204,
     "profileImage": "https://via.placeholder.com/100",
     "backgroundImage": "https://via.placeholder.com/600x400"
@@ -50,24 +74,7 @@
     "favourite": true,
     "projects": 241,
     "tasks": 204,
-    "profileImage": "https://via.placeholder.com/100",
-    "backgroundImage": "https://via.placeholder.com/600x400"
-  },
-  {
-    "name": "Jennifer Carter",
-    "designation": "UI/UX Designer",
-    "favourite": true,
-    "projects": 241,
-    "tasks": 204,
-    "profileImage": "https://via.placeholder.com/100",
-    "backgroundImage": "https://via.placeholder.com/600x400"
-  },
-  {
-    "name": "Jennifer Carter",
-    "designation": "UI/UX Designer",
-    "favourite": true,
-    "projects": 241,
-    "tasks": 204,
+    "selected": false,
     "profileImage": "https://via.placeholder.com/100",
     "backgroundImage": "https://via.placeholder.com/600x400"
   },
@@ -77,6 +84,7 @@
     "favourite": true,
     "projects": 241,
     "tasks": 204,
+    "selected": false,
     "profileImage": "https://via.placeholder.com/100",
     "backgroundImage": "https://via.placeholder.com/600x400"
   },
@@ -86,6 +94,7 @@
     "favourite": true,
     "projects": 241,
     "tasks": 204,
+    "selected": false,
     "profileImage": "https://via.placeholder.com/100",
     "backgroundImage": "https://via.placeholder.com/600x400"
   }
