@@ -1,19 +1,19 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Project from "./pages/project";
+import ProjectPage from "./pages/project";
 import CreateProjectPage from "./pages/createProject";
-import Member from "./pages/members";
-import Layout from "./layout/layout";
+import MemberPage from "./pages/members";
+import Layout from "./layouts/MainLayout";
 
 const App = () => {
   return (
     <Router>
       <Layout>
         <Routes>
-          <Route path="/" element={<Project />} />
-          <Route path="/apps-projects-list" element={<Project />} />
+          <Route path="/" element={<ProjectPage />} />
+          <Route path="/apps-projects-list" element={<ProjectPage />} />
           <Route path="/apps-projects-create" element={<CreateProjectPage />} />
-          <Route path="/pages-members" element={<Member />} />
+          <Route path="/pages-members" element={<MemberPage />} />
         </Routes>
       </Layout>
     </Router>

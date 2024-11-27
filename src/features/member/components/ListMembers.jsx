@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { useSelector } from "react-redux";
-import { ITEMS_PER_PAGE } from "../config/config.js";
+import { ITEMS_PER_PAGE } from "../../../config/config.js";
 import {
   Breadcrumbs,
   Link,
@@ -11,14 +11,12 @@ import {
   Pagination,
   Button,
 } from "@mui/material";
-
-import useDebounce from "../hooks/useDebounce.js";
-
-import MemberCard from "./cardMember.jsx";
-import AddMemberModal from "./addMemberModal.jsx";
+import useDebounce from "../../../hooks/useDebounce.js";
+import MemberCard from "./CardMember.jsx";
+import AddMemberModal from "./AddMemberModal.jsx";
 
 const Team = () => {
-  const teamData = useSelector((state) => state.team.teamData);
+  const MemberData = useSelector((state) => state.team.MemberData);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,14 +36,14 @@ const Team = () => {
   const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
 
   const filteredData = useMemo(() => {
-    return teamData.filter((member) => {
+    return MemberData.filter((member) => {
       const lowerCaseQuery = debouncedSearchQuery.toLowerCase();
       return (
         member.name.toLowerCase().includes(lowerCaseQuery) ||
         member.designation.toLowerCase().includes(lowerCaseQuery)
       );
     });
-  }, [teamData, debouncedSearchQuery]);
+  }, [MemberData, debouncedSearchQuery]);
 
   // Display data for the current page
   const currentData = filteredData.slice(indexOfFirstItem, indexOfLastItem);

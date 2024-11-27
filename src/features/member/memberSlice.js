@@ -1,16 +1,16 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
-import teamData from "../Data/teams.json";
+import MemberData from "../../_mock/data/members.json";
 
 const initialState = {
     // gán id cho data mẫu để xử lý action
-    teamData: teamData.map((member) => ({ ...member, _id: uuidv4() })) || [],
+    MemberData: MemberData.map((member) => ({ ...member, _id: uuidv4() })) || [],
 
-    // teamData: teamData || [],
+    // MemberData: MemberData || [],
 };
 
-const teamSlice = createSlice({
+const MemberSlice = createSlice({
     name: "team",
     initialState,
     reducers: {
@@ -27,12 +27,12 @@ const teamSlice = createSlice({
                 profileImage: profileImage || "https://via.placeholder.com/100",
                 backgroundImage: backgroundImage || "https://via.placeholder.com/600x400",
             };
-            state.teamData.push(newMember);
+            state.MemberData.push(newMember);
         },
 
         // delete member by id
         removeMember: (state, action) => {
-            state.teamData = state.teamData.filter(
+            state.MemberData = state.MemberData.filter(
                 (member) => member._id !== action.payload
             );
         },
@@ -40,13 +40,13 @@ const teamSlice = createSlice({
         // update member
         updateMember: (state, action) => {
             const { _id, updatedData } = action.payload;
-            const memberIndex = state.teamData.findIndex(
+            const memberIndex = state.MemberData.findIndex(
                 (member) => member._id === _id
             );
 
             if (memberIndex !== -1) {
-                state.teamData[memberIndex] = {
-                    ...state.teamData[memberIndex],
+                state.MemberData[memberIndex] = {
+                    ...state.MemberData[memberIndex],
                     ...updatedData,
                 };
             }
@@ -54,6 +54,6 @@ const teamSlice = createSlice({
     },
 });
 
-export const { addMember, removeMember, updateMember } = teamSlice.actions;
+export const { addMember, removeMember, updateMember } = MemberSlice.actions;
 
-export default teamSlice.reducer;
+export default MemberSlice.reducer;
