@@ -21,14 +21,13 @@ const ListProjects = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
+
   const filteredData = useMemo(() => {
     return projects.filter((project) => {
       const lowerCaseQuery = debouncedSearchQuery.toLowerCase();
-      return project.projectTitle
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase(lowerCaseQuery));
+      return project.projectTitle.toLowerCase().includes(lowerCaseQuery);
     });
-  }, [projects, searchQuery]);
+  }, [projects, debouncedSearchQuery]);
 
   const indexOfLastItem = currentPage * ITEMS_PER_PAGE_PROJECT;
   const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE_PROJECT;

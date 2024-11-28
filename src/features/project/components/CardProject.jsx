@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import {
   Card,
   CardContent,
@@ -6,13 +8,47 @@ import {
   LinearProgress,
   IconButton,
   Box,
+  Divider,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import { memo } from "react";
 import PropTypes from "prop-types";
+import DeleteProjectModal from "./DeleteProjectModal";
+import { removeProject } from "../projectSlice.js";
 
 const ProjectCard = ({ project }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const dispatch = useDispatch();
+  const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
+  const [selectedProjectId, setselectedProjectId] = useState(null);
+  const open = Boolean(anchorEl);
   const { projectTitle, status, deadline, members } = project;
 
+  const handleClickOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleOpenModalDelete = (id) => {
+    setselectedProjectId(id);
+    setIsModalDeleteOpen(true);
+  };
+
+  const handleCloseModalDelete = () => {
+    setIsModalDeleteOpen(false);
+    setselectedProjectId(null);
+    setAnchorEl(null);
+  };
+
+  const handleDeleteMember = () => {
+    dispatch(removeProject(selectedProjectId));
+    handleCloseModalDelete();
+    setAnchorEl(null);
+  };
   const getRandomColor = () => {
     const letters = "0123456789ABCDEF";
     let color = "#";
@@ -44,9 +80,45 @@ const ProjectCard = ({ project }) => {
           <IconButton>
             <i className="ri-star-fill"></i>
           </IconButton>
-          <IconButton>
+          <IconButton onClick={handleClickOpen}>
             <i className="ri-more-fill"></i>
           </IconButton>
+          <Menu
+            className="dropdown-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+          >
+            <MenuItem className="dropdown-item">
+              <i className="ri-pencil-line  "></i>
+              Edit
+            </MenuItem>
+            <MenuItem className="dropdown-item">
+              <i className="ri-eye-fill "></i>
+              View
+            </MenuItem>
+            <Divider />
+            <MenuItem
+              className="dropdown-item"
+              onClick={() => handleOpenModalDelete(project._id)}
+            >
+              <i className="ri-delete-bin-5-line"></i>
+              Delete
+            </MenuItem>
+            <DeleteProjectModal
+              isOpenModalDelete={isModalDeleteOpen}
+              handleCloseModalDelete={handleCloseModalDelete}
+              handleDeleteMember={handleDeleteMember}
+            />
+          </Menu>
         </Box>
         <Box
           className="text-center"
@@ -123,6 +195,7 @@ const ProjectCard = ({ project }) => {
 
 ProjectCard.propTypes = {
   project: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
     projectTitle: PropTypes.string.isRequired,
     thumbnailImage: PropTypes.string.isRequired,
     projectDescription: PropTypes.string.isRequired,
