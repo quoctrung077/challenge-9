@@ -1,12 +1,10 @@
 import { Modal, Box, Button, IconButton, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import PropTypes from "prop-types";
 
 const DeleteMemberModal = ({
-  // eslint-disable-next-line react/prop-types
   isOpenModalDelete,
-  // eslint-disable-next-line react/prop-types
   handleCloseModalDelete,
-  // eslint-disable-next-line react/prop-types
   handleDeleteMember,
 }) => {
   return (
@@ -46,6 +44,12 @@ const DeleteMemberModal = ({
       </Box>
     </Modal>
   );
+};
+
+DeleteMemberModal.propTypes = {
+  isOpenModalDelete: PropTypes.bool.isRequired,
+  handleCloseModalDelete: PropTypes.func,
+  handleDeleteMember: PropTypes.func,
 };
 
 export default DeleteMemberModal;

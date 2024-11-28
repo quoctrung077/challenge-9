@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -21,6 +22,7 @@ import { useDispatch } from "react-redux";
 import { addProject } from "../projectSlice.js";
 import { Editor } from "@tinymce/tinymce-react";
 import AddMemberProjectModal from "./AddMemberProjectModal";
+import OverlayLoading from "../../../components/common/OverlayLoading.jsx";
 
 const FileUpload = ({ files, handleFileChange, handleDelete }) => {
   return (
@@ -108,8 +110,11 @@ const FormCreateProject = () => {
   const [startDate, setStartDate] = useState("");
   const [privacy, setPrivacy] = useState("Private");
   const [categories, setCategories] = useState("");
-  const [favourite, setFavourite] = useState(false);
+  const [isFavourite, setIsFavourite] = useState(false);
   const [files, setFiles] = useState([]);
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const handleFileChange = (event) => {
     const newFiles = Array.from(event.target.files).map((file) => ({
@@ -130,48 +135,49 @@ const FormCreateProject = () => {
     setStartDate(today);
   }, []);
 
-  const dispatch = useDispatch();
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newProject = {
-      projectTitle,
-      thumbnailImage: fileName,
-      projectDescription,
-      priority,
-      status,
-      deadline,
-      startDate,
-      favourite,
-      attachedFiles: files.map((file) => file.name),
-      privacy: { status: privacy },
-      tags: {
-        categories,
-        skills,
-      },
-      members: {
-        teamLead,
-        teamMembers: selectedMembers.map((member) => member.name),
-      },
-    };
+    setIsLoading(true);
+    setTimeout(() => {
+      navigate("/apps-projects-list");
+      const newProject = {
+        projectTitle,
+        thumbnailImage: fileName,
+        projectDescription,
+        priority,
+        status,
+        deadline,
+        startDate,
+        isFavourite,
+        attachedFiles: files.map((file) => file.name),
+        privacy: { status: privacy },
+        tags: {
+          categories,
+          skills,
+        },
+        members: {
+          teamLead,
+          teamMembers: selectedMembers.map((member) => member.name),
+        },
+      };
 
-    // Dispatch action tạo dự án
-    dispatch(addProject(newProject));
+      dispatch(addProject(newProject));
 
-    // Reset form sau khi tạo dự án
-    setProjectTitle("");
-    setProjectDescription("");
-    setPriority("Medium");
-    setStatus("Inprogress");
-    setDeadline("");
-    setSkills([]);
-    setTeamLead("");
-    setSelectedMembers([]);
-    setFileName("No file chosen");
-    setPrivacy("Private");
-    setCategories("");
-    setFavourite(false);
-    setFiles([]);
+      setProjectTitle("");
+      setProjectDescription("");
+      setPriority("Medium");
+      setStatus("Inprogress");
+      setDeadline("");
+      setSkills([]);
+      setTeamLead("");
+      setSelectedMembers([]);
+      setFileName("No file chosen");
+      setPrivacy("Private");
+      setCategories("");
+      setIsFavourite(false);
+      setFiles([]);
+      setIsLoading(false);
+    }, 2000);
   };
 
   const handleFileThumbnailChange = (event) => {
@@ -540,6 +546,7 @@ const FormCreateProject = () => {
           </Box>
         </Box>
       </Box>
+      <OverlayLoading isLoading={isLoading} message={"Creating project..."} />
     </form>
   );
 };
@@ -568,7 +575,7 @@ const CreateProject = () => {
         </Breadcrumbs>
       </Box>
       <Box p={3} className="create-project__body">
-        {FormCreateProject()}
+        <FormCreateProject />
       </Box>
     </Box>
   );

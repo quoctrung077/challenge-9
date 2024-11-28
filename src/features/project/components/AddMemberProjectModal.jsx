@@ -24,12 +24,11 @@ const style = {
   width: 500,
   bgcolor: "background.paper",
   boxShadow: 24,
-
   borderRadius: "8px",
 };
+import PropTypes from "prop-types";
 
-// eslint-disable-next-line react/prop-types
-const MembersModal = ({ open, handleClose, handleInvite }) => {
+const AddMemberProjectModal = ({ open, handleClose, handleInvite }) => {
   const MemberData = useSelector((state) => state.team.MemberData);
   const [selectedMembers, setSelectedMembers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -183,4 +182,10 @@ const MembersModal = ({ open, handleClose, handleInvite }) => {
   );
 };
 
-export default MembersModal;
+AddMemberProjectModal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  handleInvite: PropTypes.func.isRequired,
+};
+
+export default AddMemberProjectModal;

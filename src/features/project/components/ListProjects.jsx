@@ -1,4 +1,5 @@
 import { useState, useMemo, memo } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Breadcrumbs,
   Link,
@@ -19,12 +20,13 @@ const ListProjects = () => {
   const projects = useSelector(SelectProjects);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
 
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
   const filteredData = useMemo(() => {
     return projects.filter((project) => {
-      const lowerCaseQuery = debouncedSearchQuery.toLowerCase();
+      const lowerCaseQuery = debouncedSearchQuery.trim().toLowerCase();
       return project.projectTitle.toLowerCase().includes(lowerCaseQuery);
     });
   }, [projects, debouncedSearchQuery]);
@@ -35,6 +37,10 @@ const ListProjects = () => {
 
   const handleChangePage = (event, value) => {
     setCurrentPage(value);
+  };
+
+  const handleAddNewClick = () => {
+    navigate("/apps-projects-create");
   };
 
   return (
@@ -80,7 +86,11 @@ const ListProjects = () => {
                 className="ri-add-fill"
               ></i>
             </Box>
-            <Button className="add-new-project__button--text" sx={{ p: 0 }}>
+            <Button
+              className="add-new-project__button--text"
+              sx={{ p: 0 }}
+              onClick={handleAddNewClick}
+            >
               Add New
             </Button>
           </Box>
@@ -113,8 +123,8 @@ const ListProjects = () => {
 
         {/* Projects Grid */}
         <Grid container spacing={0}>
-          {currentData.map((project, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+          {currentData.map((project) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={project._id}>
               <ProjectCard project={project} />
             </Grid>
           ))}

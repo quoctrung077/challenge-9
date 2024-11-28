@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   Modal,
   Box,
@@ -9,52 +7,15 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { updateMember } from "../memberSlice";
+import PropTypes from "prop-types";
 
 const EditMemberModal = ({
-  // eslint-disable-next-line react/prop-types
   isOpenEditModal,
-  // eslint-disable-next-line react/prop-types
   handleCloseEditModal,
-  // eslint-disable-next-line react/prop-types
-  memberId,
+  handleSubmitEdit,
+  handleInputChange,
+  memberData,
 }) => {
-  const dispatch = useDispatch();
-
-  const MemberData = useSelector((state) => state.team.MemberData);
-
-  const [memberData, setMemberData] = useState({
-    name: "",
-    designation: "",
-  });
-
-  useEffect(() => {
-    if (memberId) {
-      const memberToEdit = MemberData.find((member) => member._id === memberId);
-      if (memberToEdit) {
-        setMemberData({
-          name: memberToEdit.name,
-          designation: memberToEdit.designation,
-        });
-      }
-    }
-  }, [memberId, MemberData]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setMemberData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmitEdit = (e) => {
-    e.preventDefault();
-
-    dispatch(updateMember({ _id: memberId, updatedData: memberData }));
-    handleCloseEditModal();
-  };
-
   return (
     <Modal open={isOpenEditModal || false} onClose={handleCloseEditModal}>
       <Box
@@ -110,8 +71,9 @@ const EditMemberModal = ({
               className="text-field"
               fullWidth
               name="name"
-              value={memberData.name}
+              value={memberData.name || ""}
               onChange={handleInputChange}
+              required
             />
           </Box>
           <Box mb={3}>
@@ -122,8 +84,9 @@ const EditMemberModal = ({
               className="text-field"
               fullWidth
               name="designation"
-              value={memberData.designation}
+              value={memberData.designation || ""}
               onChange={handleInputChange}
+              required
             />
           </Box>
           <Box display="flex" justifyContent="flex-end" gap={1}>
@@ -138,6 +101,17 @@ const EditMemberModal = ({
       </Box>
     </Modal>
   );
+};
+
+EditMemberModal.propTypes = {
+  isOpenEditModal: PropTypes.bool.isRequired,
+  handleCloseEditModal: PropTypes.func.isRequired,
+  handleSubmitEdit: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  memberData: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    designation: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default EditMemberModal;

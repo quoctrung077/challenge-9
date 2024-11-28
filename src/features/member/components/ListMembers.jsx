@@ -37,7 +37,7 @@ const ListMembers = () => {
 
   const filteredData = useMemo(() => {
     return MemberData.filter((member) => {
-      const lowerCaseQuery = debouncedSearchQuery.toLowerCase();
+      const lowerCaseQuery = debouncedSearchQuery.trim().toLowerCase();
       return (
         member.name.toLowerCase().includes(lowerCaseQuery) ||
         member.designation.toLowerCase().includes(lowerCaseQuery)
@@ -139,8 +139,8 @@ const ListMembers = () => {
 
         {/* Team Cards */}
         <Grid container spacing={3}>
-          {currentData.map((member, index) => (
-            <MemberCard key={index} member={member} />
+          {currentData.map((member) => (
+            <MemberCard key={member._id} member={member} />
           ))}
         </Grid>
 
