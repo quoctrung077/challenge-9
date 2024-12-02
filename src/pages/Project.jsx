@@ -1,11 +1,7 @@
 import ListProjects from "../features/project/components/ListProjects";
 
 const Project = () => {
-  return (
-    <div>
-      <ListProjects />
-    </div>
-  );
+  return <ListProjects />;
 };
 
 export default Project;

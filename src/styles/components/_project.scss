@@ -1,4 +1,32 @@
+@media screen and (max-width: 600px) {
+  .create-project__container {
+    .create-project__body {
+      .create-project__form {
+        flex-direction: column;
+        .create-project__form-left {
+          width: 100% !important;
+          padding: 0 !important;
+        }
+        .create-project__form-right {
+          padding: 0 !important;
+          margin-top: 24px;
+          width: 100% !important;
+        }
+      }
+    }
+
+    .btn-form-desktop__container {
+      display: none;
+    }
+    .btn-form-mobile__container {
+      display: flex;
+      padding: 0;
+    }
+  }
+}
+
 .project__container {
+  flex: 1;
   .breadcrumb__container {
     display: flex;
     align-items: center;
@@ -9,6 +37,7 @@
   }
   .projects-list__container {
     padding: 24px;
+    height: 100%;
     background-color: #f3f3f9;
     .search__container {
       display: flex;
