@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import {
   Card,
@@ -15,7 +15,7 @@ import {
 import { memo } from "react";
 import PropTypes from "prop-types";
 import DeleteProjectModal from "./DeleteProjectModal";
-import { removeProject } from "../projectSlice.js";
+import { removeProject, toggleFavorite } from "../projectSlice.js";
 import OverlayLoading from "../../../components/common/OverlayLoading";
 
 const CardProject = ({ project }) => {
@@ -26,6 +26,20 @@ const CardProject = ({ project }) => {
   const [isLoading, setIsLoading] = useState(false);
   const open = Boolean(anchorEl);
   const { projectTitle, status, deadline, members } = project;
+  const progressValue = useMemo(() => Math.floor(Math.random() * 100), []);
+
+  // Memoize the random color generation so it only runs once during the initial render
+  const randomColor = useMemo(() => {
+    const getRandomColor = () => {
+      const letters = "0123456789ABCDEF";
+      let color = "#";
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    };
+    return getRandomColor();
+  }, []);
 
   const handleClickOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -55,14 +69,6 @@ const CardProject = ({ project }) => {
       setAnchorEl(null);
     }, 2000);
   };
-  const getRandomColor = () => {
-    const letters = "0123456789ABCDEF";
-    let color = "#";
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  };
 
   // Function to get the status class
   const getStatusClass = () => {
@@ -76,17 +82,27 @@ const CardProject = ({ project }) => {
     }
   };
 
+  const handleToggleFavorite = (id) => {
+    dispatch(toggleFavorite(id));
+  };
+
   return (
     <>
       <OverlayLoading isLoading={isLoading} message="Processing ..." />
-      <Card sx={{ maxWidth: 380, position: "relative", mb: 2 }}>
+      <Card sx={{ maxWidth: 400, position: "relative" }}>
         <Box
-          className=" project-card__header "
-          sx={{ backgroundColor: getRandomColor() }}
+          className="project-card__header"
+          sx={{ backgroundColor: randomColor }}
         >
           <Box>
-            <IconButton>
-              <i className="ri-star-fill"></i>
+            <IconButton onClick={() => handleToggleFavorite(project._id)}>
+              <i
+                className={`ri-star-${project.favourite ? "fill" : "fill"}`}
+                style={{
+                  fontSize: 14,
+                  color: project.favourite ? "#f7b500" : "#878a99",
+                }}
+              ></i>
             </IconButton>
             <IconButton onClick={handleClickOpen}>
               <i className="ri-more-fill"></i>
@@ -193,7 +209,7 @@ const CardProject = ({ project }) => {
           <LinearProgress
             className="linear-progress"
             variant="determinate"
-            value={Math.floor(Math.random() * 100)}
+            value={progressValue}
             sx={{ marginTop: 2 }}
           />
         </CardContent>

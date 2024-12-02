@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+
 import {
   Box,
   Button,
@@ -18,7 +19,7 @@ import {
   Avatar,
   Tooltip,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addProject } from "../projectSlice.js";
 import { Editor } from "@tinymce/tinymce-react";
 import AddMemberProjectModal from "./AddMemberProjectModal";
@@ -115,6 +116,7 @@ const FormCreateProject = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
+  const allMembers = useSelector((state) => state.team.MemberData);
 
   const handleFileChange = (event) => {
     const newFiles = Array.from(event.target.files).map((file) => ({
@@ -260,6 +262,9 @@ const FormCreateProject = () => {
                   "&:hover": {
                     backgroundColor: "#e0e0e0",
                   },
+                  "@media (max-width: 600px)": {
+                    width: "41%",
+                  },
                 }}
               >
                 Choose File
@@ -382,6 +387,7 @@ const FormCreateProject = () => {
             display: "flex",
             justifyContent: "flex-end",
           }}
+          className="btn-form-desktop__container"
         >
           <Button
             onClick={() => window.history.back()}
@@ -500,8 +506,12 @@ const FormCreateProject = () => {
               value={teamLead}
               onChange={handleTeamLeadChange}
             >
-              {selectedMembers.map((member) => (
-                <MenuItem key={member._id} value={member._id}>
+              {allMembers.map((member) => (
+                <MenuItem
+                  sx={{ overflow: "scroll-hidden" }}
+                  key={member._id}
+                  value={member._id}
+                >
                   {member.name}
                 </MenuItem>
               ))}
@@ -544,6 +554,27 @@ const FormCreateProject = () => {
               />
             </Box>
           </Box>
+        </Box>
+        <Box
+          sx={{
+            mt: 2,
+            mb: 2,
+            pl: 2,
+            pr: 2,
+            display: "none",
+            justifyContent: "flex-end",
+          }}
+          className="btn-form-mobile__container"
+        >
+          <Button
+            onClick={() => window.history.back()}
+            className="btn-form__cancel"
+          >
+            Cancel
+          </Button>
+          <Button type="submit" className="btn__create">
+            Create
+          </Button>
         </Box>
       </Box>
       <OverlayLoading isLoading={isLoading} message={"Creating project..."} />

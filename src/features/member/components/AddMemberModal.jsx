@@ -15,37 +15,74 @@ import { addMember } from "../memberSlice";
 import OverlayLoading from "../../../components/common/OverlayLoading";
 
 const AddMemberModal = ({ isOpen, handleClose }) => {
-  const [name, setName] = useState("");
-  const [designation, setDesignation] = useState("");
-  const [isLoading, setIsloading] = useState(false);
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [formAddMember, setFormAddMember] = useState({
+    name: "",
+    designation: "",
+    isLoading: false,
+    openSnackbar: false,
+    snackbarMessage: "",
+    isErrorName: false,
+    isErrorDesignation: false,
+  });
+
   const dispatch = useDispatch();
 
   const handleAddMember = () => {
-    if (name && designation) {
-      setIsloading(true);
-      setTimeout(() => {
-        dispatch(addMember({ name, designation }));
-        setName("");
-        setDesignation("");
-        handleClose();
-        setIsloading(false);
-      }, 2000);
+    let hasError = false;
+    //check name && designation
+    if (!formAddMember.name) {
+      setFormAddMember((prev) => ({ ...prev, isErrorName: true }));
+      hasError = true;
     } else {
-      setSnackbarMessage("Please enter name and designation");
-      setOpenSnackbar(true);
+      setFormAddMember((prev) => ({ ...prev, isErrorName: false }));
     }
+
+    if (!formAddMember.designation) {
+      setFormAddMember((prev) => ({ ...prev, isErrorDesignation: true }));
+      hasError = true;
+    } else {
+      setFormAddMember((prev) => ({ ...prev, isErrorDesignation: false }));
+    }
+
+    if (hasError) {
+      setFormAddMember((prev) => ({
+        ...prev,
+        snackbarMessage: "Please enter name or designation",
+        openSnackbar: true,
+      }));
+      return;
+    }
+
+    //add member
+    setFormAddMember((prev) => ({ ...prev, isLoading: true }));
+    setTimeout(() => {
+      dispatch(
+        addMember({
+          name: formAddMember.name,
+          designation: formAddMember.designation,
+        })
+      );
+      setFormAddMember({
+        name: "",
+        designation: "",
+        isLoading: false,
+        openSnackbar: false,
+        snackbarMessage: "",
+        isErrorName: false,
+        isErrorDesignation: false,
+      });
+      handleClose();
+    }, 2000);
   };
 
   const handleCloseSnackbar = () => {
-    setOpenSnackbar(false);
+    setFormAddMember((prev) => ({ ...prev, openSnackbar: false }));
   };
 
   return (
     <>
       <OverlayLoading
-        isLoading={isLoading}
+        isLoading={formAddMember.isLoading}
         message="Adding member..."
       ></OverlayLoading>
       <Modal open={isOpen} onClose={handleClose}>
@@ -99,11 +136,24 @@ const AddMemberModal = ({ isOpen, handleClose }) => {
                 Name
               </Typography>
               <TextField
+                sx={{
+                  "& .MuiFormHelperText-root ": { marginLeft: 0 },
+                }}
+                id="outlined-error"
                 className="text-field"
                 fullWidth
                 placeholder="Enter name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={formAddMember.name}
+                error={formAddMember.isErrorName}
+                helperText={
+                  formAddMember.isErrorName ? "Please Enter a member name." : ""
+                }
+                onChange={(e) => {
+                  setFormAddMember((prev) => ({
+                    ...prev,
+                    name: e.target.value,
+                  }));
+                }}
                 required
               />
             </Box>
@@ -112,11 +162,26 @@ const AddMemberModal = ({ isOpen, handleClose }) => {
                 Designation
               </Typography>
               <TextField
+                sx={{
+                  "& .MuiFormHelperText-root ": { marginLeft: 0 },
+                }}
                 className="text-field"
                 fullWidth
+                error={formAddMember.isErrorDesignation}
                 placeholder="Enter designation"
-                value={designation}
-                onChange={(e) => setDesignation(e.target.value)}
+                isErrorTextField={formAddMember.isErrorDesignation}
+                helperText={
+                  formAddMember.isErrorDesignation
+                    ? "Please Enter a designation."
+                    : ""
+                }
+                value={formAddMember.designation}
+                onChange={(e) => {
+                  setFormAddMember((prev) => ({
+                    ...prev,
+                    designation: e.target.value,
+                  }));
+                }}
                 required
               />
             </Box>
@@ -127,7 +192,7 @@ const AddMemberModal = ({ isOpen, handleClose }) => {
               <Button
                 className="btn-add-member"
                 onClick={handleAddMember}
-                disabled={isLoading}
+                disabled={formAddMember.isLoading}
               >
                 Add Member
               </Button>
@@ -138,10 +203,10 @@ const AddMemberModal = ({ isOpen, handleClose }) => {
 
       {/* Snackbar for displaying error message */}
       <Snackbar
-        open={openSnackbar}
+        open={formAddMember.openSnackbar}
         autoHideDuration={3000}
         onClose={handleCloseSnackbar}
-        message={snackbarMessage}
+        message={formAddMember.snackbarMessage}
         anchorOrigin={{
           vertical: "top",
           horizontal: "center",

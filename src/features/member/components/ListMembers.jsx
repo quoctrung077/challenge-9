@@ -14,7 +14,7 @@ import {
 import useDebounce from "../../../hooks/useDebounce.js";
 import MemberCard from "./CardMember.jsx";
 import AddMemberModal from "./AddMemberModal.jsx";
-
+import NoResultsFound from "../../../components/common/NoResultsFound.jsx";
 const ListMembers = () => {
   const MemberData = useSelector((state) => state.team.MemberData);
   const [currentPage, setCurrentPage] = useState(1);
@@ -136,23 +136,27 @@ const ListMembers = () => {
             />
           </Box>
         </Box>
-
-        {/* Team Cards */}
-        <Grid container spacing={3}>
-          {currentData.map((member) => (
-            <MemberCard key={member._id} member={member} />
-          ))}
-        </Grid>
-
-        {/* Pagination */}
-        <Box mt={4} display="flex" justifyContent="center">
-          <Pagination
-            count={Math.ceil(filteredData.length / ITEMS_PER_PAGE)}
-            page={currentPage}
-            onChange={handleChangePage}
-            color="primary"
-          />
-        </Box>
+        {filteredData.length === 0 ? (
+          <NoResultsFound />
+        ) : (
+          <>
+            {/* Team Cards */}
+            <Grid container spacing={3}>
+              {currentData.map((member) => (
+                <MemberCard key={member._id} member={member} />
+              ))}
+            </Grid>
+            {/* Pagination */}
+            <Box mt={4} display="flex" justifyContent="center">
+              <Pagination
+                count={Math.ceil(filteredData.length / ITEMS_PER_PAGE)}
+                page={currentPage}
+                onChange={handleChangePage}
+                color="primary"
+              />
+            </Box>
+          </>
+        )}
       </Box>
     </Box>
   );

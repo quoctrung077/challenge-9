@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import PropTypes from "prop-types";
+import { useState } from "react";
 
 const EditMemberModal = ({
   isOpenEditModal,
@@ -16,6 +17,24 @@ const EditMemberModal = ({
   handleInputChange,
   memberData,
 }) => {
+  const [errors, setErrors] = useState({ name: "", designation: "" });
+
+  const validateFields = () => {
+    const nameError = !memberData.name.trim() ? "Name cannot be empty." : "";
+    const designationError = !memberData.designation.trim()
+      ? "Designation cannot be empty."
+      : "";
+
+    setErrors({ name: nameError, designation: designationError });
+    return !nameError && !designationError;
+  };
+
+  const handleSave = () => {
+    if (validateFields()) {
+      handleSubmitEdit();
+    }
+  };
+
   return (
     <Modal open={isOpenEditModal || false} onClose={handleCloseEditModal}>
       <Box
@@ -50,7 +69,7 @@ const EditMemberModal = ({
             <img
               style={{ borderRadius: "50%" }}
               src={"./src/assets/images/user-dummy.jpg"}
-              alt=""
+              alt="avatar"
             />
             <Box
               className="add-avatar-icon"
@@ -74,6 +93,8 @@ const EditMemberModal = ({
               value={memberData.name || ""}
               onChange={handleInputChange}
               required
+              error={!!errors.name}
+              helperText={errors.name}
             />
           </Box>
           <Box mb={3}>
@@ -87,13 +108,21 @@ const EditMemberModal = ({
               value={memberData.designation || ""}
               onChange={handleInputChange}
               required
+              error={!!errors.designation}
+              helperText={errors.designation}
             />
           </Box>
           <Box display="flex" justifyContent="flex-end" gap={1}>
             <Button className="btn-close" onClick={handleCloseEditModal}>
               Close
             </Button>
-            <Button className="btn-add-member" onClick={handleSubmitEdit}>
+            <Button
+              className="btn-add-member"
+              onClick={handleSave}
+              disabled={
+                !memberData.name.trim() || !memberData.designation.trim()
+              }
+            >
               Save
             </Button>
           </Box>

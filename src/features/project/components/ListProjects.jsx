@@ -15,6 +15,7 @@ import ProjectCard from "./CardProject.jsx";
 import { SelectProjects } from "../projectSlice.js";
 import { ITEMS_PER_PAGE_PROJECT } from "../../../config/config.js";
 import useDebounce from "../../../hooks/useDebounce.js";
+import NoResultsFound from "../../../components/common/NoResultsFound.jsx";
 
 const ListProjects = () => {
   const projects = useSelector(SelectProjects);
@@ -121,24 +122,30 @@ const ListProjects = () => {
           </Box>
         </Box>
 
-        {/* Projects Grid */}
-        <Grid container spacing={0}>
-          {currentData.map((project) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={project._id}>
-              <ProjectCard project={project} />
+        {filteredData.length === 0 ? (
+          <NoResultsFound />
+        ) : (
+          <>
+            {/* Projects Grid */}
+            <Grid container spacing={3}>
+              {currentData.map((project) => (
+                <Grid item xs={12} sm={6} md={4} lg={3} key={project._id}>
+                  <ProjectCard project={project} />
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
 
-        {/* Pagination */}
-        <Box mt={4} display="flex" justifyContent="center">
-          <Pagination
-            count={Math.ceil(filteredData.length / ITEMS_PER_PAGE_PROJECT)}
-            page={currentPage}
-            onChange={handleChangePage}
-            color="primary"
-          />
-        </Box>
+            {/* Pagination */}
+            <Box mt={4} display="flex" justifyContent="center">
+              <Pagination
+                count={Math.ceil(filteredData.length / ITEMS_PER_PAGE_PROJECT)}
+                page={currentPage}
+                onChange={handleChangePage}
+                color="primary"
+              />
+            </Box>
+          </>
+        )}
       </Box>
     </Box>
   );

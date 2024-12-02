@@ -1,4 +1,31 @@
+@media screen and (max-width: 600px) {
+  .team__container {
+    .member-list__container {
+      .search__container {
+        flex-direction: column;
+        height: auto;
+        .MuiBox-root {
+          width: auto;
+        }
+        .add-member__container {
+          width: fit-content;
+          margin-top: 1rem;
+          padding: 0.5rem !important;
+          .add-member__button--text {
+            font-size: 10px !important;
+          }
+        }
+      }
+    }
+  }
+  .member-modal__container,
+  .delete-member-modal__container {
+    width: 380px !important;
+  }
+}
+
 .team__container {
+  flex: 1;
   .breadcrumb__container {
     display: flex;
     align-items: center;
@@ -8,6 +35,7 @@
     box-shadow: #38414a26 0px 1px 2px 0px;
   }
   .member-list__container {
+    height: 100%;
     padding: 24px;
     background-color: #f3f3f9;
     .search__container {
@@ -17,7 +45,6 @@
       border-radius: 0.25rem;
       display: flex;
       justify-content: space-between;
-      height: 71px;
       .search__input {
         .MuiInputBase-input {
           font-size: 0.8125rem;
@@ -36,6 +63,7 @@
         .add-member__button--text {
           color: #fff;
           font-size: 13px;
+          text-transform: capitalize;
         }
       }
     }

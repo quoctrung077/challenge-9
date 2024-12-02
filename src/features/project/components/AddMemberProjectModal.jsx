@@ -25,6 +25,9 @@ const style = {
   bgcolor: "background.paper",
   boxShadow: 24,
   borderRadius: "8px",
+  "@media (max-width: 600px)": {
+    width: "380px",
+  },
 };
 import PropTypes from "prop-types";
 
@@ -38,13 +41,16 @@ const AddMemberProjectModal = ({ open, handleClose, handleInvite }) => {
   );
 
   const handleAddMember = (member) => {
-    if (!selectedMembers.find((m) => m._id === member._id)) {
+    const isMemberSelected = selectedMembers.some((m) => m._id === member._id);
+    if (isMemberSelected) {
+      setSelectedMembers(selectedMembers.filter((m) => m._id !== member._id));
+    } else {
       setSelectedMembers([...selectedMembers, member]);
     }
   };
 
   const handleModalClose = () => {
-    setSelectedMembers([]);
+    // setSelectedMembers([]);
     handleClose();
   };
 
@@ -136,12 +142,13 @@ const AddMemberProjectModal = ({ open, handleClose, handleInvite }) => {
                       sx={{
                         fontSize: "11px",
                         color: "black",
-                        backgroundColor: "#f3f6f9",
+                        backgroundColor: selectedMembers.find(
+                          (m) => m._id === member._id
+                        )
+                          ? "#9e9e9e"
+                          : "#e0e0e0",
                       }}
                       onClick={() => handleAddMember(member)}
-                      disabled={selectedMembers.find(
-                        (m) => m._id === member._id
-                      )}
                     >
                       {selectedMembers.find((m) => m._id === member._id)
                         ? "Added"

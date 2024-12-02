@@ -15,7 +15,7 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import { removeMember, updateMember } from "../memberSlice.js";
+import { removeMember, updateMember, toggleFavorite } from "../memberSlice.js";
 import DeleteMemberModal from "./DeleteMemberModal.jsx";
 import EditMemberModal from "./EditMemberModal.jsx";
 import OverlayLoading from "../../../components/common/OverlayLoading.jsx";
@@ -106,6 +106,10 @@ const MemberCard = ({ member }) => {
       setIsLoading(false);
     }, 2000);
   };
+
+  const handleToggleFavorite = (id) => {
+    dispatch(toggleFavorite(id));
+  };
   return (
     <>
       <OverlayLoading isLoading={isLoading} message="Processing ..." />
@@ -140,10 +144,14 @@ const MemberCard = ({ member }) => {
                 height: 25,
                 cursor: "pointer",
               }}
+              onClick={() => handleToggleFavorite(member._id)}
             >
               <i
-                className="ri-star-fill"
-                style={{ fontSize: 14, color: "#878a99" }}
+                className={`ri-star-${member.favourite ? "fill" : "fill"}`}
+                style={{
+                  fontSize: 14,
+                  color: member.favourite ? "#f7b500" : "#878a99",
+                }}
               ></i>
             </IconButton>
             <IconButton
@@ -280,6 +288,7 @@ MemberCard.propTypes = {
     backgroundImage: PropTypes.string.isRequired,
     projects: PropTypes.number.isRequired,
     tasks: PropTypes.number.isRequired,
+    favourite: PropTypes.bool.isRequired,
   }).isRequired,
 };
 export default memo(MemberCard);
