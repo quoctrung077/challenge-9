@@ -68,7 +68,7 @@ const EditMemberModal = ({
           <Box className="member-modal__avatar">
             <img
               style={{ borderRadius: "50%" }}
-              src={"./public/images/user-dummy.jpg"}
+              src={"./images/user-dummy.jpg"}
               alt="avatar"
             />
             <Box
