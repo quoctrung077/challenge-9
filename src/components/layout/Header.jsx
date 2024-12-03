@@ -31,15 +31,14 @@ const Header = ({ handleToggleSidebar }) => {
       }}
     >
       <Toolbar id="toolbar123" style={{ paddingLeft: "0", height: "100%" }}>
-        {isMobile ? (
-          <IconButton onClick={handleToggleSidebar}>
-            <i className="ri-arrow-right-line"></i>
-          </IconButton>
-        ) : (
-          <IconButton onClick={handleToggleSidebar}>
-            <i className="ri-menu-line"></i>
-          </IconButton>
-        )}
+        <IconButton
+          onClick={handleToggleSidebar}
+          aria-label={isMobile ? "Expand sidebar" : "Toggle menu"}
+        >
+          <i
+            className={`ri-${isMobile ? "arrow-right-line" : "menu-line"}`}
+          ></i>
+        </IconButton>
 
         <Box
           sx={{

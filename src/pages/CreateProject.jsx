@@ -1,5 +1,6 @@
+import CreateProject from "../features/project/components/CreateProject.jsx";
 const CreateProjectPage = () => {
-  return <div>CreateProject</div>;
+  return <CreateProject />;
 };
 
 export default CreateProjectPage;
