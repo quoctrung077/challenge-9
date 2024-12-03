@@ -147,7 +147,7 @@ const CardProject = ({ project }) => {
           <Box
             className="text-center"
             component="img"
-            src={"../src/assets/images/slack.png"}
+            src={"./public/images/slack.png"}
           ></Box>
         </Box>
 

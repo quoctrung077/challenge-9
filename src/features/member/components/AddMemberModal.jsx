@@ -117,7 +117,7 @@ const AddMemberModal = ({ isOpen, handleClose }) => {
             <Box className="member-modal__avatar">
               <img
                 style={{ borderRadius: "50%" }}
-                src={"./src/assets/images/user-dummy.jpg"}
+                src={"./public/images/user-dummy.jpg"}
                 alt=""
               />
               <Box

@@ -41,7 +41,7 @@ const Sidebar = ({ isSidebarCollapsed }) => {
         {!isSidebarCollapsed ? (
           <Box className="sidebar__logo">
             <img
-              src={"./src/assets/images/logo-light.png"}
+              src={"./public/images/logo-light.png"}
               alt="logo"
               style={{ width: "100px" }}
             />
@@ -49,7 +49,7 @@ const Sidebar = ({ isSidebarCollapsed }) => {
         ) : (
           <Box className="sidebar__logo">
             <img
-              src={"./src/assets/images/logo-sm.png"}
+              src={"./public/images/logo-sm.png"}
               alt="logo"
               style={{ width: "22px" }}
             />
