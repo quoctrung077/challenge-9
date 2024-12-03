@@ -95,6 +95,24 @@
   }
 }
 
+.btn-delete-member {
+  &.MuiButtonBase-root {
+    background-color: #f06548;
+    padding: 8px 14px;
+    border: 1px solid #f06548;
+    border-radius: 4px;
+    font-weight: normal;
+    &:hover {
+      background-color: #cc563d;
+      border: 1px solid #cc563d;
+    }
+  }
+  &.MuiButton-text {
+    color: #fff;
+    font-size: 13px;
+    text-transform: capitalize;
+  }
+}
 .btn-close {
   &.MuiButtonBase-root {
     background-color: #f3f3f9;

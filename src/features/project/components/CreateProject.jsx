@@ -611,14 +611,14 @@ const CreateProject = () => {
             color: "#495057",
           }}
         >
-          Projects List
+          Create Project
         </Typography>
         <Breadcrumbs separator=">" aria-label="breadcrumb">
           <Link underline="hover" color="#212529" href="#">
             Projects
           </Link>
           <Typography underline="hover" color="inherit">
-            Projects List
+            Create Project
           </Typography>
         </Breadcrumbs>
       </Box>

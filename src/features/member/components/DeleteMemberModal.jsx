@@ -36,7 +36,7 @@ const DeleteMemberModal = ({
             <Button className="btn-close" onClick={handleCloseModalDelete}>
               Close
             </Button>
-            <Button className="btn-add-member" onClick={handleDeleteMember}>
+            <Button className="btn-delete-member" onClick={handleDeleteMember}>
               Yes, Delete It!
             </Button>
           </Box>
