@@ -11,8 +11,8 @@ import {
   Snackbar,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { addMember } from "../memberSlice";
-import OverlayLoading from "../../../components/common/OverlayLoading";
+import { addMember } from "../memberSlice.js";
+import OverlayLoading from "../../../components/common/OverlayLoading.jsx";
 
 const AddMemberModal = ({ isOpen, handleClose }) => {
   const [formAddMember, setFormAddMember] = useState({
@@ -30,14 +30,14 @@ const AddMemberModal = ({ isOpen, handleClose }) => {
   const handleAddMember = () => {
     let hasError = false;
     //check name && designation
-    if (!formAddMember.name) {
+    if (!formAddMember.name.trim()) {
       setFormAddMember((prev) => ({ ...prev, isErrorName: true }));
       hasError = true;
     } else {
       setFormAddMember((prev) => ({ ...prev, isErrorName: false }));
     }
 
-    if (!formAddMember.designation) {
+    if (!formAddMember.designation.trim()) {
       setFormAddMember((prev) => ({ ...prev, isErrorDesignation: true }));
       hasError = true;
     } else {

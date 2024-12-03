@@ -66,12 +66,12 @@ const MemberCard = ({ member }) => {
   const handleOpenModalDelete = (id) => {
     setSelectedMemberId(id);
     setIsModalDeleteOpen(true);
+    handleClose();
   };
 
   const handleCloseModalDelete = () => {
     setIsModalDeleteOpen(false);
     setSelectedMemberId(null);
-    setAnchorEl(null);
   };
 
   const handleDeleteMember = () => {
@@ -79,7 +79,6 @@ const MemberCard = ({ member }) => {
     setTimeout(() => {
       dispatch(removeMember(selectedMemberId));
       handleCloseModalDelete();
-      setAnchorEl(null);
       setIsLoading(false);
     }, 2000);
   };
@@ -87,12 +86,12 @@ const MemberCard = ({ member }) => {
   const handlOpenEditModal = (id) => {
     setSelectedMemberId(id);
     setIsModalEditOpen(true);
+    handleClose();
   };
 
   const handleCloseModalEdit = () => {
     setIsModalEditOpen(false);
     setIsModalEditOpen(null);
-    setAnchorEl(null);
   };
 
   const handleSubmitEdit = () => {
@@ -102,7 +101,6 @@ const MemberCard = ({ member }) => {
         updateMember({ _id: selectedMemberId, updatedData: memberData })
       );
       handleCloseModalEdit();
-      setAnchorEl(null);
       setIsLoading(false);
     }, 2000);
   };
@@ -188,13 +186,6 @@ const MemberCard = ({ member }) => {
                 <i className="ri-pencil-line  "></i>
                 Edit
               </MenuItem>
-              <EditMemberModal
-                isOpenEditModal={isModalEditOpen}
-                handleCloseEditModal={handleCloseModalEdit}
-                memberData={memberData}
-                handleInputChange={handleInputChange}
-                handleSubmitEdit={handleSubmitEdit}
-              />
               <MenuItem
                 className="dropdown-item"
                 onClick={() => handleOpenModalDelete(member._id)}
@@ -202,12 +193,19 @@ const MemberCard = ({ member }) => {
                 <i className="ri-delete-bin-5-line"></i>
                 Delete
               </MenuItem>
-              <DeleteMemberModal
-                isOpenModalDelete={isModalDeleteOpen}
-                handleCloseModalDelete={handleCloseModalDelete}
-                handleDeleteMember={handleDeleteMember}
-              />
             </Menu>
+            <EditMemberModal
+              isOpenEditModal={isModalEditOpen}
+              handleCloseEditModal={handleCloseModalEdit}
+              memberData={memberData}
+              handleInputChange={handleInputChange}
+              handleSubmitEdit={handleSubmitEdit}
+            />
+            <DeleteMemberModal
+              isOpenModalDelete={isModalDeleteOpen}
+              handleCloseModalDelete={handleCloseModalDelete}
+              handleDeleteMember={handleDeleteMember}
+            />
             <Avatar
               sx={{
                 width: 90,

@@ -35,6 +35,7 @@ const ListProjects = () => {
   const indexOfLastItem = currentPage * ITEMS_PER_PAGE_PROJECT;
   const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE_PROJECT;
   const currentData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE_PROJECT);
 
   const handleChangePage = (event, value) => {
     setCurrentPage(value);
@@ -136,14 +137,18 @@ const ListProjects = () => {
             </Grid>
 
             {/* Pagination */}
-            <Box mt={4} display="flex" justifyContent="center">
-              <Pagination
-                count={Math.ceil(filteredData.length / ITEMS_PER_PAGE_PROJECT)}
-                page={currentPage}
-                onChange={handleChangePage}
-                color="primary"
-              />
-            </Box>
+            {totalPages > 1 && (
+              <Box mt={4} display="flex" justifyContent="center">
+                <Pagination
+                  count={Math.ceil(
+                    filteredData.length / ITEMS_PER_PAGE_PROJECT
+                  )}
+                  page={currentPage}
+                  onChange={handleChangePage}
+                  color="primary"
+                />
+              </Box>
+            )}
           </>
         )}
       </Box>

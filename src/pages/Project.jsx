@@ -1,4 +1,4 @@
-import ListProjects from "../features/project/components/ListProjects";
+import ListProjects from "../features/project/components/ListProjects.jsx";
 
 const Project = () => {
   return <ListProjects />;

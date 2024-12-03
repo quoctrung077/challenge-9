@@ -14,8 +14,8 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 import { DashboardMenu } from "../../_mock/mockDashboardMenu.jsx";
+import PropTypes from "prop-types";
 
-// eslint-disable-next-line react/prop-types
 const Sidebar = ({ isSidebarCollapsed }) => {
   const [open, setOpen] = useState({});
 
@@ -31,7 +31,7 @@ const Sidebar = ({ isSidebarCollapsed }) => {
   ))({
     [`& .${tooltipClasses.tooltip}`]: {
       backgroundColor: "#3a4b7c",
-      marginLeft: 0,
+      marginLeft: "8px !important",
     },
   });
 
@@ -308,6 +308,10 @@ const Sidebar = ({ isSidebarCollapsed }) => {
       {DrawerList}
     </Drawer>
   );
+};
+
+Sidebar.propTypes = {
+  isSidebarCollapsed: PropTypes.bool.isRequired,
 };
 
 export default React.memo(Sidebar);

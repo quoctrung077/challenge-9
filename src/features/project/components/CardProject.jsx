@@ -14,9 +14,9 @@ import {
 } from "@mui/material";
 import { memo } from "react";
 import PropTypes from "prop-types";
-import DeleteProjectModal from "./DeleteProjectModal";
+import DeleteProjectModal from "./DeleteProjectModal.jsx";
 import { removeProject, toggleFavorite } from "../projectSlice.js";
-import OverlayLoading from "../../../components/common/OverlayLoading";
+import OverlayLoading from "../../../components/common/OverlayLoading.jsx";
 
 const CardProject = ({ project }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -89,7 +89,7 @@ const CardProject = ({ project }) => {
   return (
     <>
       <OverlayLoading isLoading={isLoading} message="Processing ..." />
-      <Card sx={{ maxWidth: 400, position: "relative" }}>
+      <Card sx={{ maxWidth: 500, position: "relative" }}>
         <Box
           className="project-card__header"
           sx={{ backgroundColor: randomColor }}

@@ -48,6 +48,8 @@ const ListMembers = () => {
   // Display data for the current page
   const currentData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
 
+  const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+
   const handleChangePage = (event, value) => {
     setCurrentPage(value);
   };
@@ -103,7 +105,6 @@ const ListMembers = () => {
             </Box>
             <InputBase
               className="search__input"
-              width="500px"
               value={searchQuery}
               onChange={handleSearchChange}
               placeholder="Search  . . ."
@@ -147,14 +148,16 @@ const ListMembers = () => {
               ))}
             </Grid>
             {/* Pagination */}
-            <Box mt={4} display="flex" justifyContent="center">
-              <Pagination
-                count={Math.ceil(filteredData.length / ITEMS_PER_PAGE)}
-                page={currentPage}
-                onChange={handleChangePage}
-                color="primary"
-              />
-            </Box>
+            {totalPages > 1 && (
+              <Box mt={4} display="flex" justifyContent="center">
+                <Pagination
+                  count={Math.ceil(filteredData.length / ITEMS_PER_PAGE)}
+                  page={currentPage}
+                  onChange={handleChangePage}
+                  color="primary"
+                />
+              </Box>
+            )}
           </>
         )}
       </Box>

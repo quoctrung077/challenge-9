@@ -50,7 +50,6 @@ const AddMemberProjectModal = ({ open, handleClose, handleInvite }) => {
   };
 
   const handleModalClose = () => {
-    // setSelectedMembers([]);
     handleClose();
   };
 

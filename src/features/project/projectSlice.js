@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 import ProjectData from "../../_mock/data/projects.json";
-import store from '../../store/Store';
+import store from '../../store/Store.js';
 
 const storedProjects = localStorage.getItem("PROJECTS");
 const initialState = {

@@ -22,7 +22,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { addProject } from "../projectSlice.js";
 import { Editor } from "@tinymce/tinymce-react";
-import AddMemberProjectModal from "./AddMemberProjectModal";
+import AddMemberProjectModal from "./AddMemberProjectModal.jsx";
 import OverlayLoading from "../../../components/common/OverlayLoading.jsx";
 
 const FileUpload = ({ files, handleFileChange, handleDelete }) => {
@@ -140,12 +140,28 @@ const FormCreateProject = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
+    const sanitizedTitle = projectTitle.trim().replace(/\s+/g, " ");
+    const sanitizedDescription = projectDescription.trim().replace(/\s+/g, " ");
+    if (sanitizedTitle === "" || sanitizedDescription === "") {
+      setIsLoading(false);
+      alert("Project title and description cannot be empty or just spaces!");
+      return;
+    }
+
+    const currentDate = new Date().setHours(0, 0, 0, 0);
+    const deadlineDate = new Date(deadline).setHours(0, 0, 0, 0);
+    if (deadline && deadlineDate < currentDate) {
+      setIsLoading(false);
+      alert("Deadline cannot be in the past!");
+      return;
+    }
+
     setTimeout(() => {
       navigate("/apps-projects-list");
       const newProject = {
-        projectTitle,
+        projectTitle: sanitizedTitle,
         thumbnailImage: fileName,
-        projectDescription,
+        projectDescription: sanitizedDescription,
         priority,
         status,
         deadline,
@@ -213,6 +229,7 @@ const FormCreateProject = () => {
   const handleInvite = (members) => {
     setSelectedMembers(members);
   };
+
   return (
     <form className="create-project__form" onSubmit={handleSubmit}>
       <Box className="create-project__form-left">
@@ -572,7 +589,7 @@ const FormCreateProject = () => {
           >
             Cancel
           </Button>
-          <Button type="submit" className="btn__create">
+          <Button disabled={isLoading} type="submit" className="btn__create">
             Create
           </Button>
         </Box>
