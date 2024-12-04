@@ -4,9 +4,15 @@ const Theme = createTheme({
   typography: {
     fontFamily: '"Poppins", sans-serif',
   },
-  TextField: {
-    "& .MuiInputBase-root": {
-      height: "40px",
+  components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          "& .MuiInputBase-root": {
+            height: "40px",
+          },
+        },
+      },
     },
   },
 });
