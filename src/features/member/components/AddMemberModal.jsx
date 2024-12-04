@@ -58,8 +58,8 @@ const AddMemberModal = ({ isOpen, handleClose }) => {
     setTimeout(() => {
       dispatch(
         addMember({
-          name: formAddMember.name,
-          designation: formAddMember.designation,
+          name: formAddMember.name.trim(),
+          designation: formAddMember.designation.trim(),
         })
       );
       setFormAddMember({

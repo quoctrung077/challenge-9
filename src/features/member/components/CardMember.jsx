@@ -48,8 +48,8 @@ const MemberCard = ({ member }) => {
       );
       if (memberToEdit) {
         setMemberData({
-          name: memberToEdit.name,
-          designation: memberToEdit.designation,
+          name: memberToEdit.name.trim(),
+          designation: memberToEdit.designation.trim(),
         });
       }
     }
@@ -83,7 +83,7 @@ const MemberCard = ({ member }) => {
     }, 2000);
   };
 
-  const handlOpenEditModal = (id) => {
+  const handleOpenEditModal = (id) => {
     setSelectedMemberId(id);
     setIsModalEditOpen(true);
     handleClose();
@@ -91,7 +91,7 @@ const MemberCard = ({ member }) => {
 
   const handleCloseModalEdit = () => {
     setIsModalEditOpen(false);
-    setIsModalEditOpen(null);
+    setIsModalEditOpen();
   };
 
   const handleSubmitEdit = () => {
@@ -181,7 +181,7 @@ const MemberCard = ({ member }) => {
             >
               <MenuItem
                 className="dropdown-item"
-                onClick={() => handlOpenEditModal(member._id)}
+                onClick={() => handleOpenEditModal(member._id)}
               >
                 <i className="ri-pencil-line  "></i>
                 Edit

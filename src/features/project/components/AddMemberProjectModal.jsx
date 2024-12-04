@@ -35,6 +35,18 @@ const AddMemberProjectModal = ({ open, handleClose, handleInvite }) => {
   const MemberData = useSelector((state) => state.team.MemberData);
   const [selectedMembers, setSelectedMembers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isScrolling, setIsScrolling] = useState(false);
+  let scrollTimeout = null;
+
+  const handleScroll = () => {
+    setIsScrolling(true);
+    if (scrollTimeout) {
+      clearTimeout(scrollTimeout);
+    }
+    scrollTimeout = setTimeout(() => {
+      setIsScrolling(false);
+    }, 1000);
+  };
 
   const filteredMembers = MemberData.filter((member) =>
     member.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -62,7 +74,7 @@ const AddMemberProjectModal = ({ open, handleClose, handleInvite }) => {
     <Modal open={open} onClose={handleModalClose}>
       <Box sx={style}>
         <Box className="add-member-modal__header">
-          <Typography className="add-member-modal__header-title">
+          <Typography className="add-member-modal__header--title">
             Members
           </Typography>
           <IconButton onClick={handleModalClose}>
@@ -121,7 +133,25 @@ const AddMemberProjectModal = ({ open, handleClose, handleInvite }) => {
               ))}
             </Box>
           </Box>
-          <List sx={{ overflow: "auto", maxHeight: "300px" }}>
+          <List
+            onScroll={handleScroll}
+            sx={{
+              overflowY: "auto",
+              maxHeight: "300px",
+              "&::-webkit-scrollbar": {
+                width: "6px",
+                visibility: isScrolling ? "visible" : "hidden",
+              },
+              "&::-webkit-scrollbar-thumb": {
+                backgroundColor: "#888",
+                borderRadius: "10px",
+                visibility: isScrolling ? "visible" : "hidden",
+                "&:hover": {
+                  visibility: "visible",
+                },
+              },
+            }}
+          >
             {filteredMembers.length > 0 ? (
               filteredMembers.map((member) => (
                 <ListItem key={member._id} sx={{ mb: 1 }}>

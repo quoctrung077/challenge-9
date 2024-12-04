@@ -1,44 +1,50 @@
-.sidebar__container {
-  .MuiDrawer-paper {
+.sidebar {
+  &__logo {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: #3a4b7c;
-    color: #fff;
-    flex-shrink: 0;
-    & .sidebar__logo {
+    justify-content: center;
+    height: 70px;
+    align-items: center;
+    padding: 0 20px;
+  }
+  &__container {
+    .MuiDrawer-paper {
       display: flex;
-      justify-content: center;
-      height: 70px;
-      align-items: center;
-      padding: 0 20px;
-    }
-    & .sidebar-menu__container {
-      flex-grow: 1;
-      overflow: auto;
-      .sidebar__title {
-        padding: 12px 20px;
-        color: #838fb9;
-        font-size: 11px;
-        font-weight: 700;
-      }
-      .sidebar__item {
-        color: #abb9e8;
-        &:hover {
-          color: #fff;
-          .MuiListItemIcon-root {
-            color: #fff;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: #3a4b7c;
+      color: #fff;
+      flex-shrink: 0;
+      & .sidebar-menu {
+        &__container {
+          flex-grow: 1;
+          overflow: auto;
+          .sidebar {
+            &__title {
+              padding: 12px 20px;
+              color: #838fb9;
+              font-size: 11px;
+              font-weight: 700;
+            }
+            &__item {
+              color: #abb9e8;
+              &:hover {
+                color: #fff;
+                .MuiListItemIcon-root {
+                  color: #fff;
+                }
+                .MuiListItemText-root {
+                  color: #fff;
+                }
+                .MuiTypography-root {
+                  color: #fff;
+                }
+              }
+              .MuiTypography-root {
+                font-size: 15px;
+                color: #abb9e8;
+              }
+            }
           }
-          .MuiListItemText-root {
-            color: #fff;
-          }
-          .MuiTypography-root {
-            color: #fff;
-          }
-        }
-        .MuiTypography-root {
-          font-size: 15px;
-          color: #abb9e8;
         }
       }
     }

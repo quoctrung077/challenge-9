@@ -15,7 +15,6 @@ const Layout = ({ children }) => {
     const handleResize = () => {
       const isMobileView = window.innerWidth <= 600;
       setIsMobile(isMobileView);
-      // ngăn chặn giữ trạng thái collapsed nếu chuyển sang mobile
       if (isMobileView) {
         setIsSidebarCollapsed(false);
       }
@@ -45,7 +44,7 @@ const Layout = ({ children }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  });
+  }, [isMobile]);
   const handleSidebarToggle = () => {
     if (isMobile) {
       setIsSidebarVisible((prevState) => !prevState);
