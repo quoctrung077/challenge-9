@@ -9,7 +9,7 @@ const Theme = createTheme({
       styleOverrides: {
         root: {
           "& .MuiInputBase-root": {
-            height: "40px",
+            height: "37px",
           },
         },
       },

@@ -17,6 +17,8 @@ import {
   CardContent,
   CardActions,
   Avatar,
+  Snackbar,
+  Alert,
   Tooltip,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -75,7 +77,15 @@ const FileUpload = ({ files, handleFileChange, handleDelete }) => {
               image={file.url}
               alt={file.name}
             />
-            <CardContent sx={{ flexGrow: 1 }}>
+            <CardContent
+              sx={{
+                flexGrow: 1,
+                "@media (max-width: 600px)": {
+                  width: "100%",
+                  overflow: "hidden",
+                },
+              }}
+            >
               <Typography variant="body1">{file.name}</Typography>
               <Typography variant="body2" color="textSecondary">
                 {file.size} MB
@@ -83,7 +93,7 @@ const FileUpload = ({ files, handleFileChange, handleDelete }) => {
             </CardContent>
             <CardActions>
               <Button
-                sx={{ color: "#fff", backgroundColor: "#f44336" }}
+                sx={{ color: "#fff", backgroundColor: "#f06548" }}
                 onClick={() => handleDelete(index)}
               >
                 Delete
@@ -115,6 +125,7 @@ const FormCreateProject = () => {
   const [files, setFiles] = useState([]);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const dispatch = useDispatch();
   const allMembers = useSelector((state) => state.team.MemberData);
 
@@ -203,8 +214,6 @@ const FormCreateProject = () => {
     setFileName(file ? file.name : "No file chosen");
   };
 
-  const handleOpen = () => setIsOpenModal(true);
-  const handleClose = () => setIsOpenModal(false);
   const handleAddSkill = (event) => {
     if (event.key === "Enter" && inputValue.trim() !== "") {
       setSkills([...skills, inputValue.trim()]);
@@ -228,6 +237,21 @@ const FormCreateProject = () => {
 
   const handleInvite = (members) => {
     setSelectedMembers(members);
+    if (members.length === 0) {
+      setSnackbarOpen(true);
+    }
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+  const handleOpen = () => setIsOpenModal(true);
+
+  const handleClose = () => {
+    if (selectedMembers.length === 0) {
+      setSnackbarOpen(true);
+    }
+    setIsOpenModal(false);
   };
 
   return (
@@ -484,7 +508,6 @@ const FormCreateProject = () => {
                     sx={{
                       backgroundColor: "#405189",
                       color: "white",
-                      height: "23px",
                     }}
                   />
                 ))}
@@ -492,6 +515,7 @@ const FormCreateProject = () => {
                   variant="standard"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
+                  A
                   onKeyDown={(e) => {
                     handleAddSkill(e);
                     handleDeleteSkillWithKey(e);
@@ -499,6 +523,7 @@ const FormCreateProject = () => {
                   sx={{
                     flexGrow: 1,
                     ".MuiInputBase-input": { padding: "0" },
+                    ".MuiInputBase-root": { height: "25px" },
                   }}
                   InputProps={{
                     disableUnderline: true,
@@ -568,6 +593,7 @@ const FormCreateProject = () => {
                 open={isOpenModal}
                 handleClose={handleClose}
                 handleInvite={handleInvite}
+                selectedMembers={selectedMembers}
               />
             </Box>
           </Box>
@@ -595,6 +621,23 @@ const FormCreateProject = () => {
         </Box>
       </Box>
       <OverlayLoading isLoading={isLoading} message={"Creating project..."} />
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity="warning"
+          sx={{ width: "100%" }}
+        >
+          Please select at least one member to invite!
+        </Alert>
+      </Snackbar>
     </form>
   );
 };

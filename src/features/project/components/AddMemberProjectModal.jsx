@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Modal,
   Box,
@@ -16,6 +16,8 @@ import {
   InputBase,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import PropTypes from "prop-types";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -29,15 +31,24 @@ const style = {
     width: "380px",
   },
 };
-import PropTypes from "prop-types";
 
-const AddMemberProjectModal = ({ open, handleClose, handleInvite }) => {
+const AddMemberProjectModal = ({
+  open,
+  handleClose,
+  handleInvite,
+  selectedMembers,
+}) => {
   const MemberData = useSelector((state) => state.team.MemberData);
-  const [selectedMembers, setSelectedMembers] = useState([]);
+  const [selectedMembersState, setSelectedMembersState] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isScrolling, setIsScrolling] = useState(false);
   let scrollTimeout = null;
 
+  useEffect(() => {
+    if (open) {
+      setSelectedMembersState([...selectedMembers]);
+    }
+  }, [open, selectedMembers]);
   const handleScroll = () => {
     setIsScrolling(true);
     if (scrollTimeout) {
@@ -53,20 +64,25 @@ const AddMemberProjectModal = ({ open, handleClose, handleInvite }) => {
   );
 
   const handleAddMember = (member) => {
-    const isMemberSelected = selectedMembers.some((m) => m._id === member._id);
+    const isMemberSelected = selectedMembersState.some(
+      (m) => m._id === member._id
+    );
     if (isMemberSelected) {
-      setSelectedMembers(selectedMembers.filter((m) => m._id !== member._id));
+      setSelectedMembersState(
+        selectedMembersState.filter((m) => m._id !== member._id)
+      );
     } else {
-      setSelectedMembers([...selectedMembers, member]);
+      setSelectedMembersState([...selectedMembersState, member]);
     }
   };
 
   const handleModalClose = () => {
+    setSearchQuery("");
     handleClose();
   };
 
   const handleInviteClick = () => {
-    handleInvite(selectedMembers);
+    handleInvite(selectedMembersState);
     handleModalClose();
   };
 
@@ -116,7 +132,7 @@ const AddMemberProjectModal = ({ open, handleClose, handleInvite }) => {
               Members
             </Typography>
             <Box sx={{ display: "flex", ml: 2 }}>
-              {selectedMembers.map((member) => (
+              {selectedMembersState.map((member) => (
                 <Tooltip
                   key={member._id}
                   title={member.name}
@@ -171,7 +187,7 @@ const AddMemberProjectModal = ({ open, handleClose, handleInvite }) => {
                       sx={{
                         fontSize: "11px",
                         color: "black",
-                        backgroundColor: selectedMembers.find(
+                        backgroundColor: selectedMembersState.find(
                           (m) => m._id === member._id
                         )
                           ? "#9e9e9e"
@@ -179,7 +195,7 @@ const AddMemberProjectModal = ({ open, handleClose, handleInvite }) => {
                       }}
                       onClick={() => handleAddMember(member)}
                     >
-                      {selectedMembers.find((m) => m._id === member._id)
+                      {selectedMembersState.find((m) => m._id === member._id)
                         ? "Added"
                         : "Add"}
                     </Button>
@@ -222,6 +238,7 @@ AddMemberProjectModal.propTypes = {
   open: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   handleInvite: PropTypes.func.isRequired,
+  selectedMembers: PropTypes.array.isRequired,
 };
 
 export default AddMemberProjectModal;

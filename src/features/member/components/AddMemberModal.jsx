@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import {
@@ -27,50 +27,62 @@ const AddMemberModal = ({ isOpen, handleClose }) => {
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (!isOpen) {
+      resetForm();
+    }
+  }, [isOpen]);
+
+  const resetForm = () => {
+    setFormAddMember({
+      name: "",
+      designation: "",
+      isLoading: false,
+      openSnackbar: false,
+      snackbarMessage: "",
+      isErrorName: false,
+      isErrorDesignation: false,
+    });
+  };
+
   const handleAddMember = () => {
     let hasError = false;
-    //check name && designation
-    if (!formAddMember.name.trim()) {
-      setFormAddMember((prev) => ({ ...prev, isErrorName: true }));
+
+    // Validate name and designation
+    const updatedForm = { ...formAddMember };
+    if (!formAddMember.name.trim().replace(/\s+/g, " ")) {
+      updatedForm.isErrorName = true;
       hasError = true;
     } else {
-      setFormAddMember((prev) => ({ ...prev, isErrorName: false }));
+      updatedForm.isErrorName = false;
     }
 
-    if (!formAddMember.designation.trim()) {
-      setFormAddMember((prev) => ({ ...prev, isErrorDesignation: true }));
+    if (!formAddMember.designation.trim().replace(/\s+/g, " ")) {
+      updatedForm.isErrorDesignation = true;
       hasError = true;
     } else {
-      setFormAddMember((prev) => ({ ...prev, isErrorDesignation: false }));
+      updatedForm.isErrorDesignation = false;
     }
 
     if (hasError) {
-      setFormAddMember((prev) => ({
-        ...prev,
-        snackbarMessage: "Please enter name or designation",
-        openSnackbar: true,
-      }));
+      updatedForm.snackbarMessage = "Please enter name or designation";
+      updatedForm.openSnackbar = true;
+      setFormAddMember(updatedForm);
       return;
     }
 
-    //add member
-    setFormAddMember((prev) => ({ ...prev, isLoading: true }));
+    // Submit form
+    updatedForm.isLoading = true;
+    setFormAddMember(updatedForm);
+
     setTimeout(() => {
       dispatch(
         addMember({
-          name: formAddMember.name.trim(),
-          designation: formAddMember.designation.trim(),
+          name: formAddMember.name.trim().replace(/\s+/g, " "),
+          designation: formAddMember.designation.trim().replace(/\s+/g, " "),
         })
       );
-      setFormAddMember({
-        name: "",
-        designation: "",
-        isLoading: false,
-        openSnackbar: false,
-        snackbarMessage: "",
-        isErrorName: false,
-        isErrorDesignation: false,
-      });
+      resetForm();
       handleClose();
     }, 2000);
   };
@@ -79,12 +91,17 @@ const AddMemberModal = ({ isOpen, handleClose }) => {
     setFormAddMember((prev) => ({ ...prev, openSnackbar: false }));
   };
 
+  const handleCloseModal = () => {
+    resetForm();
+    handleClose();
+  };
+
   return (
     <>
       <OverlayLoading
         isLoading={formAddMember.isLoading}
         message="Adding member..."
-      ></OverlayLoading>
+      />
       <Modal open={isOpen} onClose={handleClose}>
         <Box
           className="member-modal__container"
@@ -110,7 +127,7 @@ const AddMemberModal = ({ isOpen, handleClose }) => {
               >
                 <i style={{ fontSize: "1rem" }} className="ri-image-fill"></i>
               </IconButton>
-              <IconButton onClick={handleClose}>
+              <IconButton onClick={handleCloseModal}>
                 <CloseIcon />
               </IconButton>
             </Box>
@@ -137,23 +154,21 @@ const AddMemberModal = ({ isOpen, handleClose }) => {
               </Typography>
               <TextField
                 sx={{
-                  "& .MuiFormHelperText-root ": { marginLeft: 0 },
+                  "& .MuiFormHelperText-root": { marginLeft: 0 },
                 }}
-                id="outlined-error"
-                className="text-field"
                 fullWidth
                 placeholder="Enter name"
                 value={formAddMember.name}
                 error={formAddMember.isErrorName}
                 helperText={
-                  formAddMember.isErrorName ? "Please Enter a member name." : ""
+                  formAddMember.isErrorName ? "Please enter a member name." : ""
                 }
-                onChange={(e) => {
+                onChange={(e) =>
                   setFormAddMember((prev) => ({
                     ...prev,
                     name: e.target.value,
-                  }));
-                }}
+                  }))
+                }
                 required
               />
             </Box>
@@ -163,30 +178,28 @@ const AddMemberModal = ({ isOpen, handleClose }) => {
               </Typography>
               <TextField
                 sx={{
-                  "& .MuiFormHelperText-root ": { marginLeft: 0 },
+                  "& .MuiFormHelperText-root": { marginLeft: 0 },
                 }}
-                className="text-field"
                 fullWidth
                 error={formAddMember.isErrorDesignation}
                 placeholder="Enter designation"
-                isErrorTextField={formAddMember.isErrorDesignation}
                 helperText={
                   formAddMember.isErrorDesignation
-                    ? "Please Enter a designation."
+                    ? "Please enter a designation."
                     : ""
                 }
                 value={formAddMember.designation}
-                onChange={(e) => {
+                onChange={(e) =>
                   setFormAddMember((prev) => ({
                     ...prev,
                     designation: e.target.value,
-                  }));
-                }}
+                  }))
+                }
                 required
               />
             </Box>
             <Box display="flex" justifyContent="flex-end" gap={1}>
-              <Button className="btn-close" onClick={handleClose}>
+              <Button className="btn-close" onClick={handleCloseModal}>
                 Close
               </Button>
               <Button
@@ -217,8 +230,8 @@ const AddMemberModal = ({ isOpen, handleClose }) => {
 };
 
 AddMemberModal.propTypes = {
-  isOpen: PropTypes.bool,
-  handleClose: PropTypes.func,
+  isOpen: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
 };
 
 export default AddMemberModal;
