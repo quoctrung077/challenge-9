@@ -67,7 +67,9 @@
             border-radius: 0.25rem;
             display: flex;
             justify-content: space-between;
-
+            .MuiInputBase-root {
+              width: 100%;
+            }
             .add-member {
               &__container {
                 background-color: #0ab39c;
@@ -93,7 +95,6 @@
           &__input {
             .MuiInputBase-input {
               font-size: 0.8125rem;
-              width: 100%;
               padding: 0;
             }
           }
@@ -142,6 +143,7 @@
 }
 .btn-close {
   &.MuiButtonBase-root {
+    min-width: 95px;
     background-color: #f3f3f9;
     border: #f3f3f9;
     color: black;

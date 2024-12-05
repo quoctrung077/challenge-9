@@ -10,6 +10,7 @@ const Theme = createTheme({
         root: {
           "& .MuiInputBase-root": {
             height: "37px",
+            fontSize: "0.82rem",
           },
         },
       },

@@ -48,8 +48,8 @@ const MemberCard = ({ member }) => {
       );
       if (memberToEdit) {
         setMemberData({
-          name: memberToEdit.name.trim(),
-          designation: memberToEdit.designation.trim(),
+          name: memberToEdit.name.trim().replace(/\s+/g, " "),
+          designation: memberToEdit.designation.trim().replace(/\s+/g, " "),
         });
       }
     }
@@ -228,7 +228,12 @@ const MemberCard = ({ member }) => {
 
           {/* Card Content */}
           <CardContent sx={{ textAlign: "center", pt: 6, pr: 3, pl: 3 }}>
-            <Typography variant="h6">{member.name}</Typography>
+            <Typography
+              variant="h6"
+              sx={{ overflow: "hidden", height: "32px" }}
+            >
+              {member.name}
+            </Typography>
             <Typography variant="body2" color="text.secondary">
               {member.designation}
             </Typography>

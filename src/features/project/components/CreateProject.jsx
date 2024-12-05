@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
@@ -93,7 +93,11 @@ const FileUpload = ({ files, handleFileChange, handleDelete }) => {
             </CardContent>
             <CardActions>
               <Button
-                sx={{ color: "#fff", backgroundColor: "#f06548" }}
+                sx={{
+                  color: "#fff",
+                  backgroundColor: "#f06548",
+                  textTransform: "capitalize",
+                }}
                 onClick={() => handleDelete(index)}
               >
                 Delete
@@ -128,6 +132,7 @@ const FormCreateProject = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const dispatch = useDispatch();
   const allMembers = useSelector((state) => state.team.MemberData);
+  const selectedMembersRef = useRef([]);
 
   const handleFileChange = (event) => {
     const newFiles = Array.from(event.target.files).map((file) => ({
@@ -237,9 +242,7 @@ const FormCreateProject = () => {
 
   const handleInvite = (members) => {
     setSelectedMembers(members);
-    if (members.length === 0) {
-      setSnackbarOpen(true);
-    }
+    selectedMembersRef.current = members;
   };
 
   const handleSnackbarClose = () => {
@@ -248,7 +251,7 @@ const FormCreateProject = () => {
   const handleOpen = () => setIsOpenModal(true);
 
   const handleClose = () => {
-    if (selectedMembers.length === 0) {
+    if (selectedMembersRef.current.length === 0) {
       setSnackbarOpen(true);
     }
     setIsOpenModal(false);
