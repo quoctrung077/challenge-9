@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   Modal,
   Box,
@@ -9,50 +7,32 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { updateMember } from "../memberSlice";
+import PropTypes from "prop-types";
+import { useState } from "react";
 
 const EditMemberModal = ({
-  // eslint-disable-next-line react/prop-types
   isOpenEditModal,
-  // eslint-disable-next-line react/prop-types
   handleCloseEditModal,
-  // eslint-disable-next-line react/prop-types
-  memberId,
+  handleSubmitEdit,
+  handleInputChange,
+  memberData,
 }) => {
-  const dispatch = useDispatch();
+  const [errors, setErrors] = useState({ name: "", designation: "" });
 
-  const MemberData = useSelector((state) => state.team.MemberData);
+  const validateFields = () => {
+    const nameError = !memberData.name.trim() ? "Name cannot be empty." : "";
+    const designationError = !memberData.designation.trim()
+      ? "Designation cannot be empty."
+      : "";
 
-  const [memberData, setMemberData] = useState({
-    name: "",
-    designation: "",
-  });
-
-  useEffect(() => {
-    if (memberId) {
-      const memberToEdit = MemberData.find((member) => member._id === memberId);
-      if (memberToEdit) {
-        setMemberData({
-          name: memberToEdit.name,
-          designation: memberToEdit.designation,
-        });
-      }
-    }
-  }, [memberId, MemberData]);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setMemberData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setErrors({ name: nameError, designation: designationError });
+    return !nameError && !designationError;
   };
 
-  const handleSubmitEdit = (e) => {
-    e.preventDefault();
-
-    dispatch(updateMember({ _id: memberId, updatedData: memberData }));
-    handleCloseEditModal();
+  const handleSave = () => {
+    if (validateFields()) {
+      handleSubmitEdit();
+    }
   };
 
   return (
@@ -88,8 +68,8 @@ const EditMemberModal = ({
           <Box className="member-modal__avatar">
             <img
               style={{ borderRadius: "50%" }}
-              src={"./src/assets/images/user-dummy.jpg"}
-              alt=""
+              src={"./images/user-dummy.jpg"}
+              alt="avatar"
             />
             <Box
               className="add-avatar-icon"
@@ -110,8 +90,11 @@ const EditMemberModal = ({
               className="text-field"
               fullWidth
               name="name"
-              value={memberData.name}
+              value={memberData.name || ""}
               onChange={handleInputChange}
+              required
+              error={!!errors.name}
+              helperText={errors.name}
             />
           </Box>
           <Box mb={3}>
@@ -122,15 +105,24 @@ const EditMemberModal = ({
               className="text-field"
               fullWidth
               name="designation"
-              value={memberData.designation}
+              value={memberData.designation || ""}
               onChange={handleInputChange}
+              required
+              error={!!errors.designation}
+              helperText={errors.designation}
             />
           </Box>
           <Box display="flex" justifyContent="flex-end" gap={1}>
             <Button className="btn-close" onClick={handleCloseEditModal}>
               Close
             </Button>
-            <Button className="btn-add-member" onClick={handleSubmitEdit}>
+            <Button
+              className="btn-add-member"
+              onClick={handleSave}
+              disabled={
+                !memberData.name.trim() || !memberData.designation.trim()
+              }
+            >
               Save
             </Button>
           </Box>
@@ -138,6 +130,17 @@ const EditMemberModal = ({
       </Box>
     </Modal>
   );
+};
+
+EditMemberModal.propTypes = {
+  isOpenEditModal: PropTypes.bool.isRequired,
+  handleCloseEditModal: PropTypes.func.isRequired,
+  handleSubmitEdit: PropTypes.func.isRequired,
+  handleInputChange: PropTypes.func.isRequired,
+  memberData: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    designation: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default EditMemberModal;

@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import ProjectPage from "./pages/project";
-import CreateProjectPage from "./pages/createProject";
-import MemberPage from "./pages/members";
-import Layout from "./layouts/MainLayout";
+import ProjectPage from "./pages/Project.jsx";
+import CreateProjectPage from "./pages/CreateProject.jsx";
+import MemberPage from "./pages/Members.jsx";
+import Layout from "./layouts/MainLayout.jsx";
 
 const App = () => {
   return (

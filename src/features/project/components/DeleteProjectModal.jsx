@@ -2,7 +2,7 @@ import { Modal, Box, Button, IconButton, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import PropTypes from "prop-types";
 
-const DeleteMemberModal = ({
+const DeleteProjectModal = ({
   isOpenModalDelete,
   handleCloseModalDelete,
   handleDeleteMember,
@@ -27,7 +27,7 @@ const DeleteMemberModal = ({
               Are You sure ?
             </Typography>
             <Typography className="delete-member-modal__body-text-description">
-              Are you sure you want to remove this member?
+              Are you sure you want to remove this project?
             </Typography>
           </Box>
         </Box>
@@ -46,10 +46,9 @@ const DeleteMemberModal = ({
   );
 };
 
-DeleteMemberModal.propTypes = {
+DeleteProjectModal.propTypes = {
   isOpenModalDelete: PropTypes.bool.isRequired,
-  handleCloseModalDelete: PropTypes.func,
-  handleDeleteMember: PropTypes.func,
+  handleCloseModalDelete: PropTypes.func.isRequired,
+  handleDeleteMember: PropTypes.func.isRequired,
 };
-
-export default DeleteMemberModal;
+export default DeleteProjectModal;

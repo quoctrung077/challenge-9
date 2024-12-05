@@ -14,8 +14,8 @@ import {
 import useDebounce from "../../../hooks/useDebounce.js";
 import MemberCard from "./CardMember.jsx";
 import AddMemberModal from "./AddMemberModal.jsx";
-
-const Team = () => {
+import NoResultsFound from "../../../components/common/NoResultsFound.jsx";
+const ListMembers = () => {
   const MemberData = useSelector((state) => state.team.MemberData);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -37,7 +37,7 @@ const Team = () => {
 
   const filteredData = useMemo(() => {
     return MemberData.filter((member) => {
-      const lowerCaseQuery = debouncedSearchQuery.toLowerCase();
+      const lowerCaseQuery = debouncedSearchQuery.trim().toLowerCase();
       return (
         member.name.toLowerCase().includes(lowerCaseQuery) ||
         member.designation.toLowerCase().includes(lowerCaseQuery)
@@ -47,6 +47,8 @@ const Team = () => {
 
   // Display data for the current page
   const currentData = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
 
   const handleChangePage = (event, value) => {
     setCurrentPage(value);
@@ -103,7 +105,6 @@ const Team = () => {
             </Box>
             <InputBase
               className="search__input"
-              width="500px"
               value={searchQuery}
               onChange={handleSearchChange}
               placeholder="Search  . . ."
@@ -136,26 +137,32 @@ const Team = () => {
             />
           </Box>
         </Box>
-
-        {/* Team Cards */}
-        <Grid container spacing={3}>
-          {currentData.map((member, index) => (
-            <MemberCard key={index} member={member} />
-          ))}
-        </Grid>
-
-        {/* Pagination */}
-        <Box mt={4} display="flex" justifyContent="center">
-          <Pagination
-            count={Math.ceil(filteredData.length / ITEMS_PER_PAGE)}
-            page={currentPage}
-            onChange={handleChangePage}
-            color="primary"
-          />
-        </Box>
+        {filteredData.length === 0 ? (
+          <NoResultsFound />
+        ) : (
+          <>
+            {/* Team Cards */}
+            <Grid container spacing={3}>
+              {currentData.map((member) => (
+                <MemberCard key={member._id} member={member} />
+              ))}
+            </Grid>
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <Box mt={4} display="flex" justifyContent="center">
+                <Pagination
+                  count={Math.ceil(filteredData.length / ITEMS_PER_PAGE)}
+                  page={currentPage}
+                  onChange={handleChangePage}
+                  color="primary"
+                />
+              </Box>
+            )}
+          </>
+        )}
       </Box>
     </Box>
   );
 };
 
-export default Team;
+export default ListMembers;

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import Header from "../components/layout/Header";
-import Footer from "../components/layout/Footer";
-import Sidebar from "../components/layout/Sidebar";
+import Header from "../components/layout/Header.jsx";
+import Footer from "../components/layout/Footer.jsx";
+import Sidebar from "../components/layout/Sidebar.jsx";
 import PropTypes from "prop-types";
 
 const Layout = ({ children }) => {
@@ -15,7 +15,6 @@ const Layout = ({ children }) => {
     const handleResize = () => {
       const isMobileView = window.innerWidth <= 600;
       setIsMobile(isMobileView);
-      // ngăn chặn giữ trạng thái collapsed nếu chuyển sang mobile
       if (isMobileView) {
         setIsSidebarCollapsed(false);
       }
@@ -45,7 +44,7 @@ const Layout = ({ children }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  });
+  }, [isMobile]);
   const handleSidebarToggle = () => {
     if (isMobile) {
       setIsSidebarVisible((prevState) => !prevState);

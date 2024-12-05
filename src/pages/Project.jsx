@@ -1,11 +1,7 @@
-import ListProjects from "../features/project/components/ListProjects";
+import ListProjects from "../features/project/components/ListProjects.jsx";
 
 const Project = () => {
-  return (
-    <div>
-      <ListProjects />
-    </div>
-  );
+  return <ListProjects />;
 };
 
 export default Project;
